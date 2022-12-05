@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
       email:['',Validators.required],
       password:['',Validators.required]
     })
-
+console.log("");
   }
   hideShowPassword() {
     this.isText = !this.isText;
