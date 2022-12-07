@@ -25,3 +25,7 @@
  * Create validateAllFormFields for validation
  * Create login and signup methods for pages to connect database
  * Not fully learn javascript
+ 
+ ## Day 4 - 07.12.2022
+ # Import HttpClientModule and ReactiveFormsModule
+ 
