@@ -31,7 +31,7 @@
   * how to create button
   * a href, target for open link in new tab
   * paragraph
-  * For what <class> is using 
+  * For what class is using 
   * style for using css
   ### CSS Basics
   * hwo to design element and specific class
