@@ -28,11 +28,11 @@
  
  ## Day 4 - 07.12.2022
  ### HTML Basics
-  * <button> how to create
-  * <a> href, target for open link in new tab
-  * <p> </p> paragraph
+  * how to create button
+  * a href, target for open link in new tab
+  * paragraph
   * For what <class> is using 
-  * <style> for using css
+  * style for using css
   ### CSS Basics
   * hwo to design element and specific class
   * some style attributes like color-for text colour, background-color,width,height,border,margin,transition etc..
