@@ -27,5 +27,14 @@
  * Not fully learn javascript
  
  ## Day 4 - 07.12.2022
- ### Import HttpClientModule and ReactiveFormsModule
+ ### HTML Basics
+  * <button> how to create
+  * <a> href, target for open link in new tab
+  * <p> </p> paragraph
+  * For what <class> is using 
+  * <style> for using css
+  ### CSS Basics
+  * hwo to design element and specific class
+  * some style attributes like color-for text colour, background-color,width,height,border,margin,transition etc..
+  * pseudo-class hover, active
  
