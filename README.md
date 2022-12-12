@@ -39,7 +39,7 @@
   * pseudo-class hover, active
   
   ## Day 5 - 08.12.2022
-  ### CSS Basics
+   ### CSS Basics
     *Text styles
     *HTML entity
     *Inspect Web Page
@@ -49,10 +49,10 @@
     *how to give 1 style to two different class
     *Priority in CSS
     *span element
-   ### HTML Basics
-   *Images and Text Boxes
-   *Display Property of elements block, inline-block and inline
-   *div element
+     ### HTML Basics
+    *Images and Text Boxes
+    *Display Property of elements block, inline-block and inline
+    *div element
   
   ## Day 6 - 09.12.2022
   *Nested Layouts horizontal and vertical layouts
