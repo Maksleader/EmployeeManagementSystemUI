@@ -37,4 +37,37 @@
   * hwo to design element and specific class
   * some style attributes like color-for text colour, background-color,width,height,border,margin,transition etc..
   * pseudo-class hover, active
+  
+  ## Day 5 - 08.12.2022
+  ### CSS Basics
+    *Text styles
+    *HTML entity
+    *Inspect Web Page
+    *Margins and paddings
+    *font-family
+    *line-height
+    *how to give 1 style to two different class
+    *Priority in CSS
+    *span element
+   ### HTML Basics
+   *Images and Text Boxes
+   *Display Property of elements block, inline-block and inline
+   *div element
+  
+  ## Day 6 - 09.12.2022
+  *Nested Layouts horizontal and vertical layouts
+  *Css grid
+  *Flex box
+  *Css Postion
+  *Absolute and Relative Positions
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
  
