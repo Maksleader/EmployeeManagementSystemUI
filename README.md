@@ -61,6 +61,35 @@
   * Css Postion
   * Absolute and Relative Positions
   
+  ## Day 7 12.12.2022
+  * Practice with HTML and Css
+  
+  ## Day 8 13.12.2022
+  * Practice with HTML and Css
+  
+  ## Day 9 14.12.2022
+  ### Bootstrap
+  * How to add bootstrap to angular
+  * Container
+  * Grid
+  * Column 
+  * Row
+  * Cards
+  * Gutters
+  
+  ## Day 10 15.12.2022
+  ### Bootstrap
+  * Forms
+  * Form-Control
+  * Form-text
+  * Input Group
+  * Validation
+  
+  ## Day 11 16.12.2022
+  * Practice with HTML,Bootstrap and Css
+  
+  ## Day 12 16.12.2022
+  * Practice with HTML,Bootstrap and Css
   
   
   
