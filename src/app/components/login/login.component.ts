@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserAuthenticationService } from 'src/app/services/user-authentication.service';
+import { ConfigService } from 'src/app/services/config.service';
+import { AuthenticationService } from 'src/app/services/authentication.services';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,19 @@ export class LoginComponent implements OnInit {
   isText: boolean = false;
   eyeIcon: string = "bi-eye";
   loginForm!:FormGroup;
-  constructor(private  fb:FormBuilder,private authentication:AuthenticationService,private router:Router){}
+  constructor(
+    private  fb:FormBuilder,
+
+    public userAuthentication:UserAuthenticationService,
+    private router:Router, public config:ConfigService,
+    private activatedRoute: ActivatedRoute,
+    private authentication:AuthenticationService){}
+    
   ngOnInit(): void {
     this.loginForm=this.fb.group({
       email:['',Validators.required],
       password:['',Validators.required]
     })
-console.log("");
   }
   hideShowPassword() {
     this.isText = !this.isText;
@@ -28,26 +35,12 @@ console.log("");
     this.isText ? this.type="text" : this.type="password";
 }
 
-onSubmit(){
-  if(this.loginForm.valid)
-  {
-    this.authentication.login(this.loginForm.value)
-      .subscribe({
-        next:(res=>{
-          alert(res.message)
-          this.loginForm.reset();
-          this.router.navigate(['login'])
-        })
-        ,error:(err=>{
-          alert(err?.error.message)
-        })
-      })
-      console.log(this.loginForm.value);
-  }
-  else
-  {
-    this.validateAllFormFields(this.loginForm);
-  }
+async onSubmit(){
+
+    await this.userAuthentication.login(this.loginForm.value,()=>{
+      this.authentication.identityCheck();
+      location.reload();
+    });
 }
 
 private validateAllFormFields(formGroup:FormGroup){
