@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 
   signOut() {
     localStorage.removeItem('token');
+    location.reload();
     this.authService.identityCheck();
     this.router.navigate(['login']);
 }
