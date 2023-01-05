@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserAuthenticationService } from 'src/app/services/user-authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,11 +12,8 @@ export class SignupComponent implements OnInit {
   type: string = "password";
   eyeIcon: string = "bi-eye";
   signUpForm!: FormGroup
-  constructor(private fb: FormBuilder,private authentication:AuthenticationService,private router:Router) {
-    {
-     
-    }
-  }
+  constructor(private fb: FormBuilder,private authentication:UserAuthenticationService,private router:Router) {}
+  
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
       firstName: ["", Validators.required],
@@ -38,12 +35,12 @@ export class SignupComponent implements OnInit {
       this.authentication.signUp(this.signUpForm.value)
       .subscribe({
         next:(res=>{
-          alert(res.message)
+          console.log(res.status)
           this.signUpForm.reset();
-          this.router.navigate(['login'])
+          this.router.navigate([""])
         })
         ,error:(err=>{
-          alert(err?.error.message)
+          console.log(err.status)
         })
       })
       console.log(this.signUpForm.value);

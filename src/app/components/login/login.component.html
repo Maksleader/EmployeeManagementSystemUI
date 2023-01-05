@@ -23,7 +23,7 @@
                         </div>
                         <small class="text-danger" *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">*Password is required</small>
                     </div>
-                    <div class="text-center" (click)="onSubmit()"><button type="submit" class="btn btn-color px-5 mb-3 w-100">Login</button>
+                    <div class="text-center"><button (click)="onSubmit()" type="button" class="btn btn-color px-5 mb-3 w-100">Login</button>
                     </div>
                     <div id="emailHelp" class="form-text text-center mb-2 text-dark">Not
                         Registered? <a routerLink="/signup" class="text-dark fw-bold"> Create an

@@ -32,7 +32,7 @@
                     <div class="mb-3">
                         <div class="input-group" [class.error]="signUpForm.controls['userName'].dirty && signUpForm.hasError('required','userName')">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person"></i></span>
-                            <input formControlName="userName" type="text" class="form-control" id="userName" placeholder="User Name">
+                            <input formControlName="userName" type="text" class="form-control" id="userName" placeholder="Username">
                         </div>
                         <small class="text-danger" *ngIf="signUpForm.controls['userName'].dirty && signUpForm.hasError('required','userName')">*User Name is required</small>
                     </div>
@@ -54,7 +54,7 @@
                         <small class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].getError('PasswordMatcher')!=null">*Confirm Password is not match</small>
                     </div>
 
-                    <div class="text-center"><button (click)="onSignUp()" type="submit" class="btn btn-color px-5 mb-3 w-100">Signup</button>
+                    <div class="text-center"><button (click)="onSignUp()" type="button" class="btn btn-color px-5 mb-3 w-100">Signup</button>
                     </div>
                     <div id="emailHelp" class="form-text text-center mb-2 text-dark">Already have 
                         Account? <a routerLink="/login" class="text-dark fw-bold"> Log in </a>
