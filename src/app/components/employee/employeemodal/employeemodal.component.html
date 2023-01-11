@@ -1,0 +1,35 @@
+<app-shared-modal #addemployee modalTitle="Add Employee" (newConfirmationEvent)="getConfirmationValue($event)">
+    <div class="container my-5">
+        <form #form="ngForm">
+            <div class="form-group mb-3">
+                <input type="text" aria-required="\S" title="This field is required" class="form-control" id="name" name="name" [(ngModel)]="addEmployeeRequest.name"
+                    [ngModelOptions]="{standalone: true}" placeholder="Name" >
+            </div>
+            <div class="form-group mb-3">
+                <input type="text" class="form-control" id="surname" surname="surname"
+                    [(ngModel)]="addEmployeeRequest.surname" [ngModelOptions]="{standalone: true}"
+                    placeholder="Surname">
+            </div>
+            <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="position"
+                position="position" [(ngModel)]="addEmployeeRequest.positionId" [ngModelOptions]="{standalone: true}">
+                <option selected>--Select--</option>
+                <option *ngFor="let postion of allpositions" value={{postion.id}}>{{postion?.name}}</option>
+            </select>
+            <select class="selectpicker" multiple data-live-search="true">
+                <option>Mustard</option>
+                <option>Ketchup</option>
+                <option>Relish</option>
+            </select>
+            <div class="form-group mb-3">
+                <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="manager"
+                    manager="manager" [(ngModel)]="addEmployeeRequest.managerId" [ngModelOptions]="{standalone: true}">
+                    <option selected>--Select--</option>
+                    <option *ngFor="let manager of employees" value={{manager.id}}>{{manager?.name}}</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <input class="form-control" birthdate="birthdate" [(ngModel)]="addEmployeeRequest.birthDate" [ngModelOptions]="{standalone: true}" type="date" id="birthdate"  placeholder="dd/mm/yyyy">
+            </div>
+        </form>
+    </div>
+</app-shared-modal>
