@@ -22,19 +22,9 @@ export class AuthenticationService {
     return _isAuthenticated;
   }
 
-  public checkuserpermission(permission:string):boolean
-  {
-    if(this.userInfo.userconfig.user!=null)
-    {
-      let userpermissions=this.userInfo.userconfig.user.userPermissions;
-      for(let per of userpermissions)
-      {
-        if(per==permission)
-        {
-          return true;
-          break;
-        }
-      }
+  public hasPermission(permission: string): boolean {
+    if (this.userInfo.userconfig.user != null) {
+      return this.userInfo.userconfig.user.userPermissions.findIndex(p => p == permission) != -1;
     }
     return false;
   }

@@ -12,13 +12,22 @@ import { InitModule } from 'src/app/init.module';
 import { AuthInterceptor } from './authconfig.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserProfileComponent } from './components/userprofile/userprofile.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { EmployeemodalComponent } from './components/employee/employeemodal/employeemodal.component';
+import { ModalsModule } from './modals/modals.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    UserProfileComponent,
+    EmployeeComponent,
+    EmployeemodalComponent,
   ],
+
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     InitModule,
     FormsModule,
+    ModalsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('accessToken'),
@@ -39,7 +49,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  }],
+  },
+  {
+    provide: 'baseUrl',
+    useValue: 'https://localhost:7180/api',
+    multi: true,
+  },
+
+],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

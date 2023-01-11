@@ -1,0 +1,47 @@
+<div class="container py-5 h-100 ">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col col-lg-6 mb-4 mb-lg-0">
+      <div class="card mb-3" style="border-radius: .5rem;">
+        <div class="row m-0">
+          <div class="col-md-4 gradient-custom text-center text-white"
+            style="border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+            <img src="https://cdn-icons-png.flaticon.com/512/219/219986.png" alt="Avatar" class="img-fluid"
+              style="width: 80px; margin-top:30px;" />
+            <div class="row text-center py-2">
+              <label for="userName " class="form-label mb-0">UserName</label>
+              <p *ngIf="employee">{{employee.name + ' ' + employee.surname}}</p>
+            </div>
+          </div>
+          <div class="col-md-8" style="border:rgb(51, 46, 46);">
+            <div class="card-body-flex p-4">
+              <h6>Information</h6>
+              <hr class="mt-0 mb-4">
+              <div class="row pt-1">
+                <div class="col-6 mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <p>{{userInfo.userconfig.user.email}}</p>
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="age" class="form-label">Age</label>
+                  <p>{{employeeAge}}</p>
+                </div>
+                  <div class="col-6 mb-3">
+                    <label for="departments" class="form-label">Departments</label>
+                    <ng-container>
+                    <p>
+                      {{employee?.employeeDepartments.join(' ')}}
+                    </p>
+                  </ng-container>
+                  </div>
+                <div class="col-6 mb-3">
+                  <label for="position" class="form-label">Position</label>
+                  <p style="color: black;">{{employee?.position}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -28,7 +28,7 @@ export class EmployeemodalComponent implements OnInit {
     private departmentService: DepartmentService) { }
 
   ngOnInit(): void { 
-    $('select').selectpicker();
+   
   }
 
   @ViewChild('addemployee') private modalComponent: SharedModalComponent

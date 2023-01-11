@@ -1,0 +1,35 @@
+<div class="container my-5">
+    <table class="table" *ngIf="employees && employees.length>0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>BirthDate</th>
+                <th>Postion</th>
+                <th>Manager</th>
+                <th>Departments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{employee.id}}</td>
+                <td style="color: black;">{{employee.name}}</td>
+                <td>{{employee.surname}}</td>
+                <td>{{employee.birthDate}}</td>
+                <td>{{employee.position}}</td>
+                <td>{{employee.manager}}</td>
+                <td>{{employee.employeeDepartments}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p *ngIf="!employees">No Employees Found</p>
+</div>
+
+
+<button class="btn btn-lg btn-outline-primary"(click)="show()">
+    Add Employee
+</button>
+
+<app-employeemodal (newConfirmationEvent)="getConfirmationValue($event)"></app-employeemodal>
+

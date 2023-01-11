@@ -11,17 +11,16 @@ import { AuthenticationService } from './services/authentication.services';
 
 export class AppComponent implements OnInit {
   constructor(public authService:AuthenticationService, private router:Router) {
-    this.authService.identityCheck();
+    
   }
   ngOnInit(): void {
-    this.router.navigate([''])
+    this.authService.identityCheck();
   }
   title = 'EmployeeManagementSystemUI';
 
   signOut() {
     localStorage.removeItem('token');
-    location.reload();
+    document.location.href="/";
     this.authService.identityCheck();
-    this.router.navigate(['login']);
 }
 }

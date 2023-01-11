@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { interval, max, take } from 'rxjs';
 import { UserInfo } from '../models/UserInfo';
 
 @Injectable({

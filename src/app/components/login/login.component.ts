@@ -38,8 +38,7 @@ export class LoginComponent implements OnInit {
 async onSubmit(){
 
     await this.userAuthentication.login(this.loginForm.value,()=>{
-      this.authentication.identityCheck();
-      location.reload();
+      document.location.href="/";
     });
 }
 

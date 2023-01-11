@@ -11,19 +11,10 @@ import { ConfigService } from 'src/app/services/config.service';
 
 export class HomeComponent implements OnInit {
   userInfo:UserInfo =this.config.getconfig;
-constructor(public config:ConfigService,http:HttpClient){}
+constructor(public config:ConfigService){}
  
 ngOnInit(): void {
     console.log(this.userInfo)
 } 
-public getAge(dateString) {
-  var today = new Date();
-  var birthDate = new Date(dateString);
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-  }
-  return age;
-}
+
 }

@@ -37,7 +37,7 @@ export class SignupComponent implements OnInit {
         next:(res=>{
           console.log(res.status)
           this.signUpForm.reset();
-          this.router.navigate([""])
+          document.location.href="/";
         })
         ,error:(err=>{
           console.log(err.status)
