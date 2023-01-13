@@ -28,9 +28,7 @@
                   <div class="col-6 mb-3">
                     <label for="departments" class="form-label">Departments</label>
                     <ng-container>
-                    <p>
-                      {{employee?.employeeDepartments.join(' ')}}
-                    </p>
+                      <p *ngFor="let departments of employee.employeeDepartments">{{departments.name + ','}}</p>
                   </ng-container>
                   </div>
                 <div class="col-6 mb-3">

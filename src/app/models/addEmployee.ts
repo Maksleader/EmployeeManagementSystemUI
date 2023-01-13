@@ -1,3 +1,5 @@
+import { Departments } from "./department";
+
 export interface AddEmployee {
 
     name: string;
@@ -5,6 +7,6 @@ export interface AddEmployee {
     birthDate: Date;
     positionId: number;
     managerId: number;
-    employeeDepartments: string[];
+    employeeDepartments: Departments[];
 }
 

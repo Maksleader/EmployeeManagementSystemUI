@@ -1,4 +1,4 @@
-<app-shared-modal #addemployee modalTitle="Add Employee" (newConfirmationEvent)="getConfirmationValue($event)">
+<app-shared-modal #addemployee modalTitle="Add Employee" (newConfirmationEvent)="getConfirmationValue($event,'addemployee')">
     <div class="container my-5">
         <form #form="ngForm">
             <div class="form-group mb-3">
@@ -12,23 +12,120 @@
             </div>
             <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="position"
                 position="position" [(ngModel)]="addEmployeeRequest.positionId" [ngModelOptions]="{standalone: true}">
-                <option selected>--Select--</option>
+                <option value=null selected>--Select--</option>
                 <option *ngFor="let postion of allpositions" value={{postion.id}}>{{postion?.name}}</option>
-            </select>
-            <select class="selectpicker" multiple data-live-search="true">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-            </select>
+        </select>
+
+        <div class="form-group mb-3">
+            <ng-multiselect-dropdown
+            [placeholder]="'custom placeholder'"
+            [settings]="dropdownSettings"
+            [data]="alldepartments"
+            [(ngModel)]="addEmployeeRequest.employeeDepartments"
+            [ngModelOptions]="{standalone: true}"
+          >
+          </ng-multiselect-dropdown>
+            
+        </div>
+
             <div class="form-group mb-3">
                 <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="manager"
                     manager="manager" [(ngModel)]="addEmployeeRequest.managerId" [ngModelOptions]="{standalone: true}">
-                    <option selected>--Select--</option>
+                    <option value=null selected>--Select--</option>
                     <option *ngFor="let manager of employees" value={{manager.id}}>{{manager?.name}}</option>
                 </select>
             </div>
             <div class="form-group mb-3">
-                <input class="form-control" birthdate="birthdate" [(ngModel)]="addEmployeeRequest.birthDate" [ngModelOptions]="{standalone: true}" type="date" id="birthdate"  placeholder="dd/mm/yyyy">
+                <input class="form-control" birthdate="birthdate" [(ngModel)]="addEmployeeRequest.birthDate" [ngModelOptions]="{standalone: true}" type="date" id="birthdate">
+            </div>
+        </form>
+    </div>
+</app-shared-modal>
+
+<app-shared-modal #getemployeeMangers modalTitle="Managers">
+    <div class="container my" style="max-width: 1500px;">
+        <table class="table table-bordered table-lg">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Managing Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let manager of employeeManagers">
+                    <td>{{manager.id}}</td>
+                    <td style="color: black;">{{manager.name}}</td>
+                    <td>{{manager.surname}}</td>
+                    <td>{{manager.managingLevel}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-shared-modal>
+
+<app-shared-modal #getMangerEmployee modalTitle="Employees">
+    <div class="container my" style="max-width: 1500px;">
+        <table class="table table-bordered table-lg">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of managerEmployees">
+                    <td>{{employee.id}}</td>
+                    <td style="color: black;">{{employee.name}}</td>
+                    <td>{{employee.surname}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-shared-modal>
+
+<app-shared-modal #edit modalTitle="Edit" (newConfirmationEvent)="getConfirmationValue($event,'edit')">
+    <div class="container my-5">
+        <form #form="ngForm">
+            <div class="form-group mb-3">
+                <input type="text"  class="form-control" id="name" name="name" [(ngModel)]="employee.name"
+                 [ngModelOptions]="{standalone: true}" placeholder="Name" >
+            </div>      
+            <div class="form-group mb-3">
+                <input type="text" class="form-control" id="surname" surname="surname"
+                    [(ngModel)]="employee.surname" [ngModelOptions]="{standalone: true}"
+                    placeholder="Surname">
+            </div>
+            <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="position"
+                position="position" [(ngModel)]="employee.position" [ngModelOptions]="{standalone: true}">
+                <option selected value={{employee.position}}>{{employee.position}}</option>
+                <option *ngFor="let postion of allpositions" value={{postion.id}}>{{postion.name}}</option>
+        </select>
+
+        <div class="form-group mb-3">
+            <ng-multiselect-dropdown
+            [placeholder]="'custom placeholder'"
+            [settings]="dropdownSettings"
+            [data]="alldepartments"
+            [(ngModel)]="employee.employeeDepartments"
+            [ngModelOptions]="{standalone: true}"
+          >
+          </ng-multiselect-dropdown>
+            
+        </div>
+
+            <div class="form-group mb-3">
+                <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="manager"
+                    manager="manager" [(ngModel)]="employee.manager" [ngModelOptions]="{standalone: true}">
+                    <option value=null selected>{{employee.manager}}</option>
+                    <option *ngFor="let manager of employees" value={{manager.id}}>{{manager?.name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <input class="form-control" [value]="employee.birthDate" birthdate="birthdate"[(ngModel)]="updateEmployee.birthDate" [ngModelOptions]="{standalone: true}" type="date" id="birthdate">
             </div>
         </form>
     </div>

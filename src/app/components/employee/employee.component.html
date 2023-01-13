@@ -1,7 +1,7 @@
-<div class="container my-5">
-    <table class="table" *ngIf="employees && employees.length>0">
+<div class="container my" style="max-width: 1500px;">
+    <table class="table table-lg" *ngIf="employees && employees.length>0">
         <thead>
-            <tr>
+            <tr style="text-align: center;">
                 <th>Id</th>
                 <th>Name</th>
                 <th>Surname</th>
@@ -9,9 +9,13 @@
                 <th>Postion</th>
                 <th>Manager</th>
                 <th>Departments</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
             <tr *ngFor="let employee of employees">
                 <td>{{employee.id}}</td>
                 <td style="color: black;">{{employee.name}}</td>
@@ -19,7 +23,13 @@
                 <td>{{employee.birthDate}}</td>
                 <td>{{employee.position}}</td>
                 <td>{{employee.manager}}</td>
-                <td>{{employee.employeeDepartments}}</td>
+                <td>
+                    <p style="float:right;" *ngFor="let departments of employee.employeeDepartments">{{departments.name + ', '}}</p>
+                </td>
+                <td> <button class=" btn btn-outline-info" (click)="showEmployeeManagersModal(employee.id)">See All Managers</button></td>
+                <td> <button class=" btn btn-outline-info" (click)="showManagerEmployeeModal(employee.id)">See All Managers Employee</button></td>
+                <td> <button class=" btn btn-outline-warning" (click)="showeditModal(employee.id)">Edit</button></td>
+                <td> <button class=" btn btn-outline-danger">Delete</button></td>
             </tr>
         </tbody>
     </table>
@@ -27,9 +37,13 @@
 </div>
 
 
-<button class="btn btn-lg btn-outline-primary"(click)="show()">
+<button class="btn btn-lg btn-outline-primary"(click)="showAddemployeeModal()">
     Add Employee
 </button>
 
 <app-employeemodal (newConfirmationEvent)="getConfirmationValue($event)"></app-employeemodal>
+
+<app-employeemodal></app-employeemodal>
+
+<app-employeemodal></app-employeemodal>
 

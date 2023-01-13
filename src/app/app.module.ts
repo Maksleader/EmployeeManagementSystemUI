@@ -16,6 +16,7 @@ import { UserProfileComponent } from './components/userprofile/userprofile.compo
 import { EmployeeComponent } from './components/employee/employee.component';
 import { EmployeemodalComponent } from './components/employee/employeemodal/employeemodal.component';
 import { ModalsModule } from './modals/modals.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ModalsModule } from './modals/modals.module';
         allowedDomains: ['https://localhost:7180/api'],
       },
     }),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

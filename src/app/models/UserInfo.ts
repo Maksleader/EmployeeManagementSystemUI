@@ -9,16 +9,6 @@ export class UserInfo
         userName:string;
         email:string;
         userPermissions:string[];
-        createDate:string
-        employee:{
-            id: number;
-            name: string;
-            surname:string
-            birthDate:string;
-            position:string;
-            manger:string;
-            department:string[];
-        }
     }
    
     

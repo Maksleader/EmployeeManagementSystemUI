@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { EmployeeInfo } from 'src/app/models/EmployeeInfo';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -11,18 +12,36 @@ import { EmployeemodalComponent } from './employeemodal/employeemodal.component'
 })
 export class EmployeeComponent implements OnInit {
   employees:EmployeeInfo[]=[];
-  user: any;
+
   @ViewChild(EmployeemodalComponent) modal:EmployeemodalComponent
   @Input() searchStatusRxx = new BehaviorSubject(false);
-  constructor(private employeeServices:EmployeeService,private cdr:ChangeDetectorRef){}
+
+
+  constructor(private employeeServices:EmployeeService,
+    private cdr:ChangeDetectorRef,
+    private route:ActivatedRoute){}
 
  async ngOnInit():Promise<any> {
   await this.employeeServices.getAllEmployees().then(data=>{
     this.employees=data;
   })
  }
-  show(){
-   this.modal.openModal();
+  showAddemployeeModal(){
+   this.modal.openAddEmployeeModal();
+  }
+
+  showeditModal(employeeId:number){
+    this.modal.openEditModal(employeeId);
+  }
+
+  showEmployeeManagersModal(employeeId:number){
+
+    this.modal.openGetEmployeeManagersModal(employeeId);
+  }
+
+  showManagerEmployeeModal(employeeId:number){
+
+    this.modal.openGetManagerEmployees(employeeId);
   }
 
   getConfirmationValue(value: any) {
