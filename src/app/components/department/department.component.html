@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row" style="justify-content: center;">
+      <div class="col-6">
+        <table class="table table-bordered ">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let department of departments">
+              <th scope="row">{{department.id}}</th>
+              <td>{{department.name}}</td>
+              <td>
+                <button type="button" class="btn btn-success" style="margin-right: 5px;" (click)="showEditDepartmentModal(department.id)"><i class="bi bi-pencil"></i></button>
+                <button type="button" class="btn btn-danger" (click)="showDeleteDepartmentModal(department.id)"><i class="bi bi-trash-fill"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row-flex">
+          <button class="btn btn-lg btn-outline-primary" style="margin-left: 12.5cm;" (click)="showAddDepartmentModal()">
+            Add Department
+        </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <app-departmentmodal (newConfirmationEvent)="getConfirmationValue($event)"></app-departmentmodal>

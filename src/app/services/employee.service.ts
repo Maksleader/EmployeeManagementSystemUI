@@ -5,6 +5,7 @@ import { AddEmployee } from '../models/addEmployee';
 import { EmployeeInfo } from '../models/EmployeeInfo';
 import { EmployeeMangers } from '../models/employeeManagers';
 import { ManagerEmployees } from '../models/managerEmployees';
+import { UpdateEmployee } from '../models/updateEmployee';
 
 @Injectable({
   providedIn: 'root'
@@ -23,28 +24,33 @@ export class EmployeeService{
     });
   }
 
-  addEmployee(addEmployeeRequest:AddEmployee):Observable<AddEmployee>
+  async addEmployee(addEmployeeRequest:AddEmployee)
   {
    return this.http.post<AddEmployee>(`${this.baseUrl}/Employee/addEmployee`,addEmployeeRequest)
   }
 
-  getEmployeeManager(employeeId:number):Observable<EmployeeMangers[]>
+  async getEmployeeManager(employeeId:number)
   {
     return this.http.get<EmployeeMangers[]>(`${this.baseUrl}/Employee/employeemanagers?employeeId=${employeeId}`)
   }
 
-  getManagerEmployees(employeeId:number):Observable<ManagerEmployees[]>
+  async getManagerEmployees(employeeId:number)
   {
     return this.http.get<ManagerEmployees[]>(`${this.baseUrl}/Employee/managersemployee/employeeId?employeeId=${employeeId}`)
   }
 
-  getEmployee(employeeId:number):Observable<EmployeeInfo>
+  async getEmployee(employeeId:number)
   {
-    return this.http.get<EmployeeInfo>(`${this.baseUrl}/Employee/getEmployee?employeeId=${employeeId}`)
+    return this.http.get<UpdateEmployee>(`${this.baseUrl}/Employee/getEmployee?employeeId=${employeeId}`)
   }
 
-  editemployee(employeeId:number,employee:EmployeeInfo)
+  async editEmployee(employeeId:number,employee:UpdateEmployee)
   {
     return this.http.patch(`${this.baseUrl}/Employee/employeeId?employeeId=${employeeId}`,employee);
+  }
+
+  async deleteEmployee(employeeId:number)
+  {
+    return this.http.delete(`${this.baseUrl}/Employee/employeeId?employeeId=${employeeId}`)
   }
 }

@@ -1,6 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeeInfo } from 'src/app/models/EmployeeInfo';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { EmployeemodalComponent } from './employeemodal/employeemodal.component';
@@ -14,12 +12,8 @@ export class EmployeeComponent implements OnInit {
   employees:EmployeeInfo[]=[];
 
   @ViewChild(EmployeemodalComponent) modal:EmployeemodalComponent
-  @Input() searchStatusRxx = new BehaviorSubject(false);
 
-
-  constructor(private employeeServices:EmployeeService,
-    private cdr:ChangeDetectorRef,
-    private route:ActivatedRoute){}
+  constructor(private employeeServices:EmployeeService){}
 
  async ngOnInit():Promise<any> {
   await this.employeeServices.getAllEmployees().then(data=>{
@@ -44,10 +38,14 @@ export class EmployeeComponent implements OnInit {
     this.modal.openGetManagerEmployees(employeeId);
   }
 
-  getConfirmationValue(value: any) {
-    if (value == 'Save click') {
+  getConfirmationValue(value: boolean) {
+    if (value ==true) {
       location.reload();
     }
+  }
+
+  showDeleteModal(employeeId:number){
+    this.modal.openDeleteModal(employeeId);
   }
 
 }

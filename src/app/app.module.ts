@@ -17,6 +17,12 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { EmployeemodalComponent } from './components/employee/employeemodal/employeemodal.component';
 import { ModalsModule } from './modals/modals.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { PositionComponent } from './components/position/position.component';
+import { PositionmodalComponent } from './components/position/positionmodal/positionmodal.component';
+import { DepartmentComponent } from './components/department/department.component';
+import { DepartmentmodalComponent } from './components/department/departmentmodal/departmentmodal.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,6 +33,10 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     UserProfileComponent,
     EmployeeComponent,
     EmployeemodalComponent,
+    PositionComponent,
+    PositionmodalComponent,
+    DepartmentComponent,
+    DepartmentmodalComponent,
   ],
 
   imports: [
@@ -35,10 +45,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    NgbDropdownModule,
     HttpClientModule,
     InitModule,
     FormsModule,
     ModalsModule,
+    NgSelectModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('accessToken'),

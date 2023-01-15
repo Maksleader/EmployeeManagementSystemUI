@@ -29,7 +29,7 @@
                 <td> <button class=" btn btn-outline-info" (click)="showEmployeeManagersModal(employee.id)">See All Managers</button></td>
                 <td> <button class=" btn btn-outline-info" (click)="showManagerEmployeeModal(employee.id)">See All Managers Employee</button></td>
                 <td> <button class=" btn btn-outline-warning" (click)="showeditModal(employee.id)">Edit</button></td>
-                <td> <button class=" btn btn-outline-danger">Delete</button></td>
+                <td> <button class=" btn btn-outline-danger" (click)="showDeleteModal(employee.id)">Delete</button></td>
             </tr>
         </tbody>
     </table>

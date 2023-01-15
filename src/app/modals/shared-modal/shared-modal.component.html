@@ -1,20 +1,26 @@
 <ng-template #modal let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h5 class="modal-title">{{ modalTitle }}</h5>
+    <h5 class="modal-title">{{ modalConfig.modalTitle }}</h5>
   </div>
   <div class="modal-body">
     <ng-content></ng-content>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-primary" (click)="d('Cross click')">
-      Cancel
-    </button>
-    <button
-    type="button"
-    class=" btn btn-outline-primary"
+    <button type="button"
+    class={{modalConfig.buttonStyle}}
+    (click)="dismiss()"
+    *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()"
+    [disabled]="modalConfig.disableDismissButton !== undefined && modalConfig.disableDismissButton()">
+{{ modalConfig.dismissButtonLabel }}
+</button>
+
+<button type="button"
+    class={{modalConfig.buttonStyle}}
     (click)="c('Save click')"
-  >
-    Ok
-  </button>
+    *ngIf="modalConfig.hideCloseButton === undefined || !modalConfig.hideCloseButton()"
+    [disabled]="modalConfig.disableCloseButton !== undefined && modalConfig.disableCloseButton()">
+{{ modalConfig.closeButtonLabel }}
+</button>
+
   </div>
 </ng-template>

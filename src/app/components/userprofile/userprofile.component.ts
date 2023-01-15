@@ -19,7 +19,7 @@ export class UserProfileComponent implements OnInit {
     this.employeeInfo.getEmployeeInfo().subscribe({
       next:(result=>{
         this.employee=result;
-        console.log(this.employee.employeeDepartments);
+        console.log(this.employee);
     this.employeeAge=this.getAge(result.birthDate);
       })
     });
