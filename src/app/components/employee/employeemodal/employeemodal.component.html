@@ -1,9 +1,10 @@
-<app-shared-modal #addemployee [modalConfig]="addModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'addemployee')">
+<app-shared-modal #addemployee [modalConfig]="addModalConfig" (newConfirmationEvent)="addEmployee()">
     <div class="container my-5">
         <form #form="ngForm">
             <div class="form-group mb-3">
-                <input type="text" aria-required="\S" title="This field is required" class="form-control" id="name" name="name" [(ngModel)]="addEmployeeRequest.name"
-                    [ngModelOptions]="{standalone: true}" placeholder="Name" >
+                <input type="text" aria-required="\S" title="This field is required" class="form-control" id="name"
+                    name="name" [(ngModel)]="addEmployeeRequest.name" [ngModelOptions]="{standalone: true}"
+                    placeholder="Name">
             </div>
             <div class="form-group mb-3">
                 <input type="text" class="form-control" id="surname" surname="surname"
@@ -14,19 +15,15 @@
                 position="position" [(ngModel)]="addEmployeeRequest.positionId" [ngModelOptions]="{standalone: true}">
                 <option value=null selected>--Select--</option>
                 <option *ngFor="let postion of allpositions" value={{postion.id}}>{{postion?.name}}</option>
-        </select>
+            </select>
 
-        <div class="form-group mb-3">
-            <ng-multiselect-dropdown
-            [placeholder]="'custom placeholder'"
-            [settings]="dropdownSettings"
-            [data]="alldepartments"
-            [(ngModel)]="addEmployeeRequest.employeeDepartments"
-            [ngModelOptions]="{standalone: true}"
-          >
-          </ng-multiselect-dropdown>
-            
-        </div>
+            <div class="form-group mb-3">
+                <ng-multiselect-dropdown [placeholder]="'--Select Departments--'" [settings]="dropdownSettings"
+                    [data]="alldepartments" [(ngModel)]="addEmployeeRequest.employeeDepartments"
+                    [ngModelOptions]="{standalone: true}">
+                </ng-multiselect-dropdown>
+
+            </div>
 
             <div class="form-group mb-3">
                 <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="manager"
@@ -36,13 +33,14 @@
                 </select>
             </div>
             <div class="form-group mb-3">
-                <input class="form-control" birthdate="birthdate" [(ngModel)]="addEmployeeRequest.birthDate" [ngModelOptions]="{standalone: true}" type="date" id="birthdate">
+                <input class="form-control" birthdate="birthdate" [(ngModel)]="addEmployeeRequest.birthDate"
+                    [ngModelOptions]="{standalone: true}" type="date" id="birthdate">
             </div>
         </form>
     </div>
 </app-shared-modal>
 
-<app-shared-modal #getemployeeMangers [modalConfig]="getMangersModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'getemployeeMangers')">
+<app-shared-modal #getemployeeMangers [modalConfig]="getMangersModalConfig">
     <div class="container my" style="max-width: 1500px;">
         <table class="table table-bordered table-lg">
             <thead>
@@ -65,7 +63,7 @@
     </div>
 </app-shared-modal>
 
-<app-shared-modal #getMangerEmployee [modalConfig]="getManagersEmployeeModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'getMangerEmployee')">
+<app-shared-modal #getMangerEmployee [modalConfig]="getManagersEmployeeModalConfig">
     <div class="container my" style="max-width: 1500px;">
         <table class="table table-bordered table-lg">
             <thead>
@@ -86,54 +84,41 @@
     </div>
 </app-shared-modal>
 
-<app-shared-modal #edit [modalConfig]="editModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'edit')">
+<app-shared-modal #editemployee [modalConfig]="editModalConfig" (newConfirmationEvent)="editEmployee()">
     <div class="container my-5">
         <form #form="ngForm">
             <div class="form-group mb-3">
                 <label for="name">Name</label>
-                <input type="text"  class="form-control" id="name" name="name" [(ngModel)]="updateEmployee.name"
-                 [ngModelOptions]="{standalone: true}" placeholder="Name" >
-            </div>      
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="updateEmployee.name"
+                    [ngModelOptions]="{standalone: true}" placeholder="Name">
+            </div>
             <div class="form-group mb-3">
                 <label for="surname">Surname</label>
                 <input type="text" class="form-control" id="surname" surname="surname"
-                    [(ngModel)]="updateEmployee.surname" [ngModelOptions]="{standalone: true}"
-                    placeholder="Surname">
+                    [(ngModel)]="updateEmployee.surname" [ngModelOptions]="{standalone: true}" placeholder="Surname">
             </div>
 
-        <div class="form-group mb-3">
-            <label for="position">Position</label>
-            <ng-select id="position" class="custom"
-            [items]="allpositions" 
-            bindLabel="name"
-            bindValue="id" 
-            [(ngModel)]="updateEmployee.positionId"
-            [ngModelOptions]="{standalone: true}"> 
-          </ng-select>     
-        </div>
+            <div class="form-group mb-3">
+                <label for="position">Position</label>
+                <ng-select id="position" class="custom" [items]="allpositions" bindLabel="name" bindValue="id"
+                    [(ngModel)]="updateEmployee.positionId" [ngModelOptions]="{standalone: true}">
+                </ng-select>
+            </div>
 
-        <div class="form-group mb-3">
-            <ng-multiselect-dropdown 
-            [placeholder]="'--Select Department--'"
-            [settings]="dropdownSettings"
-            [data]="alldepartments"
-            [(ngModel)]="updateEmployee.departments"
-            [ngModelOptions]="{standalone: true}"
-          >
-          </ng-multiselect-dropdown>
-            
-        </div>
+            <div class="form-group mb-3">
+                <ng-multiselect-dropdown [placeholder]="'--Select Department--'" [settings]="dropdownSettings"
+                    [data]="alldepartments" [(ngModel)]="updateEmployee.departments"
+                    [ngModelOptions]="{standalone: true}">
+                </ng-multiselect-dropdown>
+
+            </div>
 
             <div class="form-group mb-3">
                 <label for="manager">Manager</label>
                 <div class="form-group mb-3">
-                    <ng-select id="manager" class="custom"
-                    [items]="employees" 
-                    bindLabel="name"
-                    bindValue="id" 
-                    [(ngModel)]="updateEmployee.managerId"
-                    [ngModelOptions]="{standalone: true}">
-                  </ng-select>
+                    <ng-select id="manager" class="custom" [items]="employees" bindLabel="name" bindValue="id"
+                        [(ngModel)]="updateEmployee.managerId" [ngModelOptions]="{standalone: true}">
+                    </ng-select>
                 </div>
 
 
@@ -142,12 +127,14 @@
 
             <div class="form-group mb-3">
                 <label for="birthdate">Birth Date</label>
-                <input class="form-control" value="12-12-2014" birthdate="birthdate"[(ngModel)]="updateEmployee.birthDate" [ngModelOptions]="{standalone: true}" type="datetime-local" data-date-format="DD MMMM YYYY" id="birthdate">
+                <input class="form-control" value="12-12-2014" birthdate="birthdate"
+                    [(ngModel)]="updateEmployee.birthDate" [ngModelOptions]="{standalone: true}" type="datetime-local"
+                    data-date-format="DD MMMM YYYY" id="birthdate">
             </div>
         </form>
     </div>
 </app-shared-modal>
 
-<app-shared-modal #deleteEmployee [modalConfig]="deleteModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'delete')">
-    <p  class="text-danger">Are you sure to delete ?</p>
+<app-shared-modal #deleteemployee [modalConfig]="deleteModalConfig" (newConfirmationEvent)="deleteEmployee()">
+    <p class="text-danger">Are you sure to delete ?</p>
 </app-shared-modal>

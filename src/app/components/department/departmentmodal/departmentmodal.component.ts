@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ModalConfig } from 'src/app/modals/modalConfig';
 import { SharedModalComponent } from 'src/app/modals/shared-modal/shared-modal.component';
 import { Departments } from 'src/app/models/department';
 import { DepartmentService } from 'src/app/services/department.service';
+import { DepartmentComponent } from '../department.component';
 
 @Component({
   selector: 'app-departmentmodal',
@@ -17,13 +18,18 @@ export class DepartmentmodalComponent {
     name:''
   }
 
+  addDepartmentRequest:Departments={
+    id:null,
+    name:''
+  }
+
   constructor(private departmentService:DepartmentService){}
   isCloseStatus: any;
 
   @ViewChild('addDepartment') private addDepartmentModal: SharedModalComponent
   @ViewChild('editDepartment') private editDepartmentModal: SharedModalComponent
   @ViewChild('deleteDepartment') private deleteDepartmentModal: SharedModalComponent
-  @Output() newConfirmationEvent = new EventEmitter<boolean>();
+  @Input() parent:DepartmentComponent;
 
   addModalConfig: ModalConfig = {
     modalTitle: 'Add Department',
@@ -53,10 +59,13 @@ export class DepartmentmodalComponent {
     return await this.addDepartmentModal.open()
   }
 
-  async closeAddDepartmentnModal() {
+  async addDepartmentnModal() {
 
-    this.departmentRequest.name = this.departmentRequest.name.trim();
-    this.departmentService.addDepartment(this.departmentRequest).subscribe();
+    this.addDepartmentRequest.name = this.addDepartmentRequest.name.trim();
+    this.departmentService.addDepartment(this.addDepartmentRequest).subscribe(_=>{
+      this.parent.refreshDepartment();
+    });
+    this.addDepartmentRequest.name=null;
     this.addDepartmentModal.close()
   }
 
@@ -67,10 +76,12 @@ export class DepartmentmodalComponent {
     return await this.editDepartmentModal.open()
   }
 
-  async closeEditDepartmentnModal() {
+  async editDepartmentnModal() {
     this.departmentRequest.name = this.departmentRequest.name.trim();
-    this.departmentService.editDepartment(this.departmentRequest).subscribe();
-    return await this.editDepartmentModal.close()
+    this.departmentService.editDepartment(this.departmentRequest).subscribe(_=>{
+      this.parent.refreshDepartment();
+    });
+    return this.editDepartmentModal.close()
   }
 
   async openDeleteDepartmentModal(positionId: number) {
@@ -79,32 +90,10 @@ export class DepartmentmodalComponent {
 
   }
 
-  async closeDeleteDepartmentnModal() {
-   this.departmentService.deleteDepartment(this.departmentRequest.id).subscribe();
-    return await this.deleteDepartmentModal.close()
-  }
-
-
-  getConfirmationValue(value: any,modaltype:any) {
-    if (value == 'Save click') {
-      if(modaltype=='addDepartment')
-      {
-        this.isCloseStatus=true;
-        this.closeAddDepartmentnModal();
-      }
-
-      if(modaltype=='editDepartment')
-      {
-        this.isCloseStatus=true;
-        this.closeEditDepartmentnModal();
-      }
-
-      if(modaltype=='deleteDepartment')
-      {
-        this.isCloseStatus=true;
-        this.closeDeleteDepartmentnModal();
-      }
-      this.newConfirmationEvent.emit(this.isCloseStatus);
-    }
+  async deleteDepartmentnModal() {
+   this.departmentService.deleteDepartment(this.departmentRequest.id).subscribe(_=>{
+    this.parent.refreshDepartment();
+  });
+    return this.deleteDepartmentModal.close()
   }
 }

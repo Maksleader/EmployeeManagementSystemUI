@@ -1,3 +1,4 @@
+import { Permission } from "./permission";
 
 export class UserInfo
 {
@@ -8,7 +9,7 @@ export class UserInfo
         lastName:string;
         userName:string;
         email:string;
-        userPermissions:string[];
+        userPermissions:Permission[];
     }
    
     

@@ -14,6 +14,11 @@ export class DepartmentComponent implements OnInit {
 
   constructor(private departmentService: DepartmentService) { }
   ngOnInit(): void {
+  this.refreshDepartment();
+  }
+
+  refreshDepartment()
+  {
     this.departmentService.getAllDepartments().subscribe({
       next: (result) => {
         this.departments = result;
@@ -22,6 +27,7 @@ export class DepartmentComponent implements OnInit {
         console.log(error);
       }
     })
+
   }
 
   showAddDepartmentModal() {
@@ -37,7 +43,7 @@ export class DepartmentComponent implements OnInit {
   }
   getConfirmationValue(value: boolean) {
     if (value == true) {
-      location.reload();
+      this.refreshDepartment();
     }
   }
 }

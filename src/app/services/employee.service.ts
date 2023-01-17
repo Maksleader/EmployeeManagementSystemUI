@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AddEmployee } from '../models/addEmployee';
 import { EmployeeInfo } from '../models/EmployeeInfo';
 import { EmployeeMangers } from '../models/employeeManagers';
@@ -10,47 +10,39 @@ import { UpdateEmployee } from '../models/updateEmployee';
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService{
+export class EmployeeService {
 
   constructor(
-    private http:HttpClient,
+    private http: HttpClient,
     @Inject('baseUrl') private baseUrl: string,
   ) { }
 
-  async getAllEmployees():Promise<EmployeeInfo[]>
-  {
-    return this.http.get<EmployeeInfo[]>(`${this.baseUrl}/Employee/getAllEmployees`).toPromise().then(data=>{
-      return data;
-    });
+
+  getAllEmployees(): Observable<EmployeeInfo[]> {
+    return this.http.get<EmployeeInfo[]>(`${this.baseUrl}/Employee/getAllEmployees`);
   }
 
-  async addEmployee(addEmployeeRequest:AddEmployee)
-  {
-   return this.http.post<AddEmployee>(`${this.baseUrl}/Employee/addEmployee`,addEmployeeRequest)
+  addEmployee(addEmployeeRequest: AddEmployee) {
+    return this.http.post<AddEmployee>(`${this.baseUrl}/Employee/addEmployee`, addEmployeeRequest)
   }
 
-  async getEmployeeManager(employeeId:number)
-  {
+  async getEmployeeManager(employeeId: number) {
     return this.http.get<EmployeeMangers[]>(`${this.baseUrl}/Employee/employeemanagers?employeeId=${employeeId}`)
   }
 
-  async getManagerEmployees(employeeId:number)
-  {
+  async getManagerEmployees(employeeId: number) {
     return this.http.get<ManagerEmployees[]>(`${this.baseUrl}/Employee/managersemployee/employeeId?employeeId=${employeeId}`)
   }
 
-  async getEmployee(employeeId:number)
-  {
+  async getEmployee(employeeId: number) {
     return this.http.get<UpdateEmployee>(`${this.baseUrl}/Employee/getEmployee?employeeId=${employeeId}`)
   }
 
-  async editEmployee(employeeId:number,employee:UpdateEmployee)
-  {
-    return this.http.patch(`${this.baseUrl}/Employee/employeeId?employeeId=${employeeId}`,employee);
+  editEmployee(employeeId: number, employee: UpdateEmployee) {
+    return this.http.patch(`${this.baseUrl}/Employee/employeeId?employeeId=${employeeId}`, employee);
   }
 
-  async deleteEmployee(employeeId:number)
-  {
+  async deleteEmployee(employeeId: number) {
     return this.http.delete(`${this.baseUrl}/Employee/employeeId?employeeId=${employeeId}`)
   }
 }

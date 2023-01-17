@@ -16,7 +16,7 @@
 
 <button type="button"
     class={{modalConfig.buttonStyle}}
-    (click)="c('Save click')"
+    (click)="c()"
     *ngIf="modalConfig.hideCloseButton === undefined || !modalConfig.hideCloseButton()"
     [disabled]="modalConfig.disableCloseButton !== undefined && modalConfig.disableCloseButton()">
 {{ modalConfig.closeButtonLabel }}

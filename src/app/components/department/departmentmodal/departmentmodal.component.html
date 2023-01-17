@@ -1,8 +1,8 @@
-<app-shared-modal #addDepartment [modalConfig]="addModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'addDepartment')">
+<app-shared-modal #addDepartment [modalConfig]="addModalConfig" (newConfirmationEvent)="addDepartmentnModal()">
     <div class="container my-5">
         <form #form="ngForm">
             <div class="form-group mb-3">
-                <input type="text" title="This field is required" class="form-control" id="department" name="department" [(ngModel)]="departmentRequest.name"
+                <input type="text" title="This field is required" class="form-control" id="department" name="department" [(ngModel)]="addDepartmentRequest.name"
                     [ngModelOptions]="{standalone: true}" placeholder="Name" >
             </div>
         </form>
@@ -10,7 +10,7 @@
 
 </app-shared-modal>
 
-<app-shared-modal #editDepartment [modalConfig]="editModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'editDepartment')">
+<app-shared-modal #editDepartment [modalConfig]="editModalConfig" (newConfirmationEvent)="editDepartmentnModal()">
     <div class="container my-5">
         <form #form="ngForm">
             <div class="form-group mb-3">
@@ -22,6 +22,6 @@
     </div>
 </app-shared-modal>
 
-<app-shared-modal #deleteDepartment [modalConfig]="deleteModalConfig" (newConfirmationEvent)="getConfirmationValue($event,'deleteDepartment')">
+<app-shared-modal #deleteDepartment [modalConfig]="deleteModalConfig" (newConfirmationEvent)="deleteDepartmentnModal()">
     <p  class="text-danger">Are you sure to delete ?</p>
 </app-shared-modal>

@@ -28,6 +28,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="users"
+              *ngIf="authService.hasPermission('User')">Users
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a   class="nav-link active" aria-current="page" routerLink="signup" *ngIf="!authService.isAuthenticated">
               Register
             </a>

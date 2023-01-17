@@ -24,7 +24,7 @@ export class AuthenticationService {
 
   public hasPermission(permission: string): boolean {
     if (this.userInfo.userconfig.user != null) {
-      return this.userInfo.userconfig.user.userPermissions.findIndex(p => p == permission) != -1;
+      return this.userInfo.userconfig.user.userPermissions.findIndex(p => p.name == permission) != -1;
     }
     return false;
   }

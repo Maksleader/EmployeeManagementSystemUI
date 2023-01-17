@@ -9,40 +9,39 @@ import { PositionmodalComponent } from './positionmodal/positionmodal.component'
   styleUrls: ['./position.component.scss']
 })
 export class PositionComponent implements OnInit {
-  positions:Position[];
-  constructor(private positionService:PositionService){}
-  
-  @ViewChild(PositionmodalComponent) modal:PositionmodalComponent
+  positions: Position[];
+  constructor(private positionService: PositionService) { }
 
-ngOnInit(): void {
-  this.positionService.getAllPostions().subscribe({
-    next:(result)=>
-    {
-      this.positions=result;
-    },
-    error:(error)=>
-    {
-      console.log(error);
-    }
-  })
-}
-showAddpositionModal(){
-  this.modal.openAddPositionModal();
-}
+  @ViewChild(PositionmodalComponent) modal: PositionmodalComponent
 
-showEditpositionModal(positionId:number){
-  this.modal.openEditPostionModal(positionId);
-}
-
-showDeletePositionModal(positionId:number){
-  this.modal.openDeletePositionModal(positionId);
-}
-
-getConfirmationValue(value: boolean) {
-  if (value ==true) {
-    location.reload();
+  ngOnInit(): void {
+    this.refreshPositions();
   }
-}
+
+  refreshPositions() {
+    this.positionService.getAllPostions().subscribe({
+      next: (result) => {
+        console.log(result);
+        this.positions = result;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  showAddpositionModal() {
+    this.modal.openAddPositionModal();
+  }
+
+  showEditpositionModal(positionId: number) {
+    this.modal.openEditPostionModal(positionId);
+  }
+
+  showDeletePositionModal(positionId: number) {
+    this.modal.openDeletePositionModal(positionId);
+  }
+
 }
 
 

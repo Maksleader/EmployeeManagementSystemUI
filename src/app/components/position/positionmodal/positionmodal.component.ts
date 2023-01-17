@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ModalConfig } from 'src/app/modals/modalConfig';
 import { SharedModalComponent } from 'src/app/modals/shared-modal/shared-modal.component';
 import { Position } from 'src/app/models/position';
 import { PositionService } from 'src/app/services/position.service';
+import { PositionComponent } from '../position.component';
 
 @Component({
   selector: 'app-positionmodal',
@@ -10,19 +11,25 @@ import { PositionService } from 'src/app/services/position.service';
   styleUrls: ['./positionmodal.component.scss']
 })
 export class PositionmodalComponent {
-constructor(private positionService:PositionService){}
+  constructor(private positionService: PositionService) { }
 
-  positionRequest:Position=
-  {
-    id:null,
-    name:''
+  positionRequest: Position =
+    {
+      id: null,
+      name: ''
+    }
+
+  addPositionRequest: Position = {
+    id: null,
+    name: ''
   }
   isCloseStatus: any;
 
   @ViewChild('addPosition') private addPostionModal: SharedModalComponent
   @ViewChild('editPosition') private editPostionModal: SharedModalComponent
   @ViewChild('deletePosition') private deletePositionModal: SharedModalComponent
-  @Output() newConfirmationEvent = new EventEmitter<boolean>();
+  @Output() ConfirmationEvent = new EventEmitter<string>();
+  @Input() parent: PositionComponent;
 
   addModalConfig: ModalConfig = {
     modalTitle: 'Add Postion',
@@ -46,28 +53,32 @@ constructor(private positionService:PositionService){}
   }
 
   async openAddPositionModal() {
-
     return await this.addPostionModal.open()
   }
 
-  async closeAddPositionModal() {
+  async addPostion() {
 
-    this.positionRequest.name = this.positionRequest.name.trim();
-    this.positionService.addPosition(this.positionRequest).subscribe();
+    this.addPositionRequest.name = this.addPositionRequest.name.trim();
+    this.positionService.addPosition(this.addPositionRequest).subscribe(_ => {
+      this.parent.refreshPositions();
+    });
+    this.addPositionRequest.name=null;
     this.addPostionModal.close()
   }
 
-  async openEditPostionModal(positionId:number) {
-    this.positionService.getPosition(positionId).subscribe(result=>{
-      this.positionRequest=result;
+  async openEditPostionModal(positionId: number) {
+    this.positionService.getPosition(positionId).subscribe(result => {
+      this.positionRequest = result;
     })
     return await this.editPostionModal.open()
   }
 
-  async closeEditPositionModal() {
+  editPostion() {
     this.positionRequest.name = this.positionRequest.name.trim();
-    this.positionService.editPosition(this.positionRequest).subscribe();
-    return await this.editPostionModal.close()
+    this.positionService.editPosition(this.positionRequest).subscribe(_ => {
+      this.parent.refreshPositions();
+    });
+    return this.editPostionModal.close()
   }
 
   async openDeletePositionModal(positionId: number) {
@@ -76,33 +87,11 @@ constructor(private positionService:PositionService){}
 
   }
 
-  async closeDeletePositionModal() {
-   this.positionService.deletePosition(this.positionRequest.id).subscribe();
-    return await this.deletePositionModal.close()
-  }
-
-
-  getConfirmationValue(value: any,modaltype:any) {
-    if (value == 'Save click') {
-      if(modaltype=='addPosition')
-      {
-        this.isCloseStatus=true;
-        this.closeAddPositionModal();
-      }
-
-      if(modaltype=='editPostion')
-      {
-        this.isCloseStatus=true;
-        this.closeEditPositionModal();
-      }
-
-      if(modaltype=='deletePosition')
-      {
-        this.isCloseStatus=true;
-        this.closeDeletePositionModal();
-      }
-      this.newConfirmationEvent.emit(this.isCloseStatus);
-    }
+  async deletePositions() {
+    this.positionService.deletePosition(this.positionRequest.id).subscribe(_ => {
+      this.parent.refreshPositions();
+    });
+    return this.deletePositionModal.close()
   }
 
 }

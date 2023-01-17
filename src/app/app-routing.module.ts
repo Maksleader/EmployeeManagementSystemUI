@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { PositionComponent } from './components/position/position.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { UserComponent } from './components/user/user.component';
 import { UserProfileComponent } from './components/userprofile/userprofile.component';
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:"employee",component:EmployeeComponent,canActivate: [AuthGuard]},
   {path:"userProfile",component:UserProfileComponent,canActivate: [AuthGuard]},
   {path:"position",component:PositionComponent,canActivate: [AuthGuard]},
-  {path:"department",component:DepartmentComponent,canActivate:[AuthGuard]}
+  {path:"department",component:DepartmentComponent,canActivate:[AuthGuard]},
+  {path:"users",component:UserComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

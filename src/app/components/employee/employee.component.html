@@ -41,7 +41,7 @@
     Add Employee
 </button>
 
-<app-employeemodal (newConfirmationEvent)="getConfirmationValue($event)"></app-employeemodal>
+<app-employeemodal [parent]="this"></app-employeemodal>
 
 <app-employeemodal></app-employeemodal>
 

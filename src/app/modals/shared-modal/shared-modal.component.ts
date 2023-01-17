@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 import { ModalConfig } from '../modalConfig';
 
 @Component({
@@ -14,6 +15,7 @@ export class SharedModalComponent implements OnInit {
   @ViewChild('modal') private modalContent!: TemplateRef<SharedModalComponent>
   @Input() public modalConfig: ModalConfig
   @Output() newConfirmationEvent = new EventEmitter<string>();
+  @Input() method:Function;
 
   private modalRef!: NgbModalRef;
 
@@ -37,9 +39,9 @@ export class SharedModalComponent implements OnInit {
     })
   }
 
-  async close(): Promise<void> {
-    if (this.modalConfig.shouldClose === undefined || (await this.modalConfig.shouldClose())) {
-      const result = this.modalConfig.onClose === undefined || (await this.modalConfig.onClose())
+   close(){
+    if (this.modalConfig.shouldClose === undefined ||  this.modalConfig.shouldClose()) {
+      const result = this.modalConfig.onClose === undefined ||  this.modalConfig.onClose()
       this.modalRef.close(result)
     }
   }

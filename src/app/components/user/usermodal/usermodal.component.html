@@ -1,0 +1,17 @@
+<app-shared-modal #permission [modalConfig]="modalConfig" (newConfirmationEvent)="addOrDeletePermisionFromUser()">
+    <div class="container my-5">
+        <form #form="ngForm">
+         
+       
+            <div class="form-group mb-3">
+                <ng-multiselect-dropdown [placeholder]="'--Select Permissions--'" [settings]="dropdownSettings"
+                    [data]="allpermissions" [(ngModel)]="user.userPermissions"
+                    [ngModelOptions]="{standalone: true}">
+                </ng-multiselect-dropdown>
+
+            </div>
+       
+
+        </form>
+    </div>
+</app-shared-modal>

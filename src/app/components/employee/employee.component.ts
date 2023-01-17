@@ -15,11 +15,19 @@ export class EmployeeComponent implements OnInit {
 
   constructor(private employeeServices:EmployeeService){}
 
- async ngOnInit():Promise<any> {
-  await this.employeeServices.getAllEmployees().then(data=>{
-    this.employees=data;
-  })
+  ngOnInit() {
+  this.refreshEmployee();
  }
+
+  refreshEmployee()
+ {
+  this.employeeServices.getAllEmployees().subscribe({
+    next:(result=>{
+      this.employees=result;
+    })
+  })
+  }
+    
   showAddemployeeModal(){
    this.modal.openAddEmployeeModal();
   }
@@ -38,11 +46,6 @@ export class EmployeeComponent implements OnInit {
     this.modal.openGetManagerEmployees(employeeId);
   }
 
-  getConfirmationValue(value: boolean) {
-    if (value ==true) {
-      location.reload();
-    }
-  }
 
   showDeleteModal(employeeId:number){
     this.modal.openDeleteModal(employeeId);

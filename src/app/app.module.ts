@@ -23,6 +23,8 @@ import { PositionmodalComponent } from './components/position/positionmodal/posi
 import { DepartmentComponent } from './components/department/department.component';
 import { DepartmentmodalComponent } from './components/department/departmentmodal/departmentmodal.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserComponent } from './components/user/user.component';
+import { UsermodalComponent } from './components/user/usermodal/usermodal.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     PositionmodalComponent,
     DepartmentComponent,
     DepartmentmodalComponent,
+    UserComponent,
+    UsermodalComponent,
   ],
 
   imports: [
