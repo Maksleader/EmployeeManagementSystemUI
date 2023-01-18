@@ -1,11 +1,9 @@
 import { Departments } from "./department";
-import { Position } from "./position";
-
-export interface UpdateEmployee {
+export class UpdateEmployee {
     id:number
     name: string;
     surname: string;
-    birthDate: Date;
+    birthDate: string;
     positionId: number[];
     managerId: number;
     departments: Departments[];

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ModalConfig } from 'src/app/modals/modalConfig';
 import { SharedModalComponent } from 'src/app/modals/shared-modal/shared-modal.component';
 import { Position } from 'src/app/models/position';
+import { ModalconfigService } from 'src/app/services/modalconfig.service';
 import { PositionService } from 'src/app/services/position.service';
 import { PositionComponent } from '../position.component';
 
@@ -11,46 +11,16 @@ import { PositionComponent } from '../position.component';
   styleUrls: ['./positionmodal.component.scss']
 })
 export class PositionmodalComponent {
-  constructor(private positionService: PositionService) { }
+  constructor(private positionService: PositionService,public modalConfig:ModalconfigService) { }
 
-  positionRequest: Position =
-    {
-      id: null,
-      name: ''
-    }
-
-  addPositionRequest: Position = {
-    id: null,
-    name: ''
-  }
-  isCloseStatus: any;
+  positionRequest: Position =new Position();
+  addPositionRequest: Position = new Position();
 
   @ViewChild('addPosition') private addPostionModal: SharedModalComponent
   @ViewChild('editPosition') private editPostionModal: SharedModalComponent
   @ViewChild('deletePosition') private deletePositionModal: SharedModalComponent
   @Output() ConfirmationEvent = new EventEmitter<string>();
   @Input() parent: PositionComponent;
-
-  addModalConfig: ModalConfig = {
-    modalTitle: 'Add Postion',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Add',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  editModalConfig: ModalConfig = {
-    modalTitle: 'Edit',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Edit',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  deleteModalConfig: ModalConfig = {
-    modalTitle: 'Delete',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Delete',
-    buttonStyle: "btn btn-outline-danger"
-  }
 
   async openAddPositionModal() {
     return await this.addPostionModal.open()

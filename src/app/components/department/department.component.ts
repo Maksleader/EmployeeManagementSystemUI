@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Departments } from 'src/app/models/department';
+import { AuthenticationService } from 'src/app/services/authentication.services';
 import { DepartmentService } from 'src/app/services/department.service';
 import { DepartmentmodalComponent } from './departmentmodal/departmentmodal.component';
 
@@ -12,7 +13,7 @@ export class DepartmentComponent implements OnInit {
   departments: Departments[];
   @ViewChild(DepartmentmodalComponent) modal: DepartmentmodalComponent
 
-  constructor(private departmentService: DepartmentService) { }
+  constructor(private departmentService: DepartmentService,public authService:AuthenticationService) { }
   ngOnInit(): void {
   this.refreshDepartment();
   }

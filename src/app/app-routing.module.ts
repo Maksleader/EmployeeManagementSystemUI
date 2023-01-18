@@ -9,16 +9,17 @@ import { PositionComponent } from './components/position/position.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserComponent } from './components/user/user.component';
 import { UserProfileComponent } from './components/userprofile/userprofile.component';
+import { PermissionGuard } from './permissionguard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: "signup", component: SignupComponent },
-  { path: "", component: HomeComponent, canActivate: [AuthGuard] },
-  {path:"employee",component:EmployeeComponent,canActivate: [AuthGuard]},
-  {path:"userProfile",component:UserProfileComponent,canActivate: [AuthGuard]},
-  {path:"position",component:PositionComponent,canActivate: [AuthGuard]},
-  {path:"department",component:DepartmentComponent,canActivate:[AuthGuard]},
-  {path:"users",component:UserComponent,canActivate:[AuthGuard]}
+  { path: "", component: HomeComponent},
+  {path:"employee",component:EmployeeComponent,data:{permission:'Employees'}},
+  {path:"userProfile",component:UserProfileComponent},
+  {path:"position",component:PositionComponent,data:{permission:'Positions'},canActivate: [AuthGuard]},
+  {path:"department",component:DepartmentComponent,data:{permission:'Departments'}},
+  {path:"users",component:UserComponent,data:{permission:'Users'},canActivate:[AuthGuard]}
 ];
 
 @NgModule({

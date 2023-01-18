@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Position } from 'src/app/models/position';
+import { AuthenticationService } from 'src/app/services/authentication.services';
 import { PositionService } from 'src/app/services/position.service';
 import { PositionmodalComponent } from './positionmodal/positionmodal.component';
 
@@ -10,7 +11,7 @@ import { PositionmodalComponent } from './positionmodal/positionmodal.component'
 })
 export class PositionComponent implements OnInit {
   positions: Position[];
-  constructor(private positionService: PositionService) { }
+  constructor(private positionService: PositionService,public authService:AuthenticationService) { }
 
   @ViewChild(PositionmodalComponent) modal: PositionmodalComponent
 

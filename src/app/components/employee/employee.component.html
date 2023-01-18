@@ -20,16 +20,17 @@
                 <td>{{employee.id}}</td>
                 <td style="color: black;">{{employee.name}}</td>
                 <td>{{employee.surname}}</td>
-                <td>{{employee.birthDate}}</td>
+                <td>{{employee.birthDate | date:'dd/MM/yyyy' }}</td>
                 <td>{{employee.position}}</td>
                 <td>{{employee.manager}}</td>
                 <td>
                     <p style="float:right;" *ngFor="let departments of employee.employeeDepartments">{{departments.name + ', '}}</p>
                 </td>
-                <td> <button class=" btn btn-outline-info" (click)="showEmployeeManagersModal(employee.id)">See All Managers</button></td>
-                <td> <button class=" btn btn-outline-info" (click)="showManagerEmployeeModal(employee.id)">See All Managers Employee</button></td>
-                <td> <button class=" btn btn-outline-warning" (click)="showeditModal(employee.id)">Edit</button></td>
-                <td> <button class=" btn btn-outline-danger" (click)="showDeleteModal(employee.id)">Delete</button></td>
+                <td> <button *ngIf="authService.hasPermission('Employees.Managers')" class=" btn btn-outline-info" (click)="showEmployeeManagersModal(employee.id,employee.name)">See All Managers</button></td>
+                <td> <button *ngIf="authService.hasPermission('Employees.ManagerEmployees')" class=" btn btn-outline-info" (click)="showManagerEmployeeModal(employee.id,employee.name)">See All Managers Employee</button></td>
+                <td> <button *ngIf="authService.hasPermission('Employees.Update')" class=" btn btn-outline-warning" (click)="showeditModal(employee.id)">Edit</button></td>
+                <td> <button *ngIf="authService.hasPermission('Employees.Delete')" class=" btn btn-outline-danger" (click)="showDeleteModal(employee.id)">Delete</button></td>
+                <app-employeemodal [employeeName]="employee.name" [parent]="this"></app-employeemodal>
             </tr>
         </tbody>
     </table>
@@ -37,13 +38,10 @@
 </div>
 
 
-<button class="btn btn-lg btn-outline-primary"(click)="showAddemployeeModal()">
+<button class="btn btn-lg btn-outline-primary" *ngIf="authService.hasPermission('Employees.Create')" (click)="showAddemployeeModal()">
     Add Employee
 </button>
 
-<app-employeemodal [parent]="this"></app-employeemodal>
 
-<app-employeemodal></app-employeemodal>
 
-<app-employeemodal></app-employeemodal>
 

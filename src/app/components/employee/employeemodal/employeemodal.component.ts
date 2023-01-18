@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ɵisStandalone } from '@angular/core';
+import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
 import { SharedModalComponent } from 'src/app/modals/shared-modal/shared-modal.component';
 import { AddEmployee } from 'src/app/models/addEmployee';
 import { EmployeeInfo } from 'src/app/models/EmployeeInfo';
@@ -8,12 +8,11 @@ import { PositionService } from 'src/app/services/position.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Departments } from 'src/app/models/department';
 import { EmployeeMangers } from 'src/app/models/employeeManagers';
-import { ActivatedRoute } from '@angular/router';
 import { ManagerEmployees } from 'src/app/models/managerEmployees';
 import { UpdateEmployee } from 'src/app/models/updateEmployee';
 import { Position } from 'src/app/models/position';
-import { ModalConfig } from 'src/app/modals/modalConfig';
 import { EmployeeComponent } from '../employee.component';
+import { ModalconfigService } from 'src/app/services/modalconfig.service';
 @Component({
   selector: 'app-employeemodal',
   templateUrl: './employeemodal.component.html',
@@ -23,80 +22,34 @@ export class EmployeemodalComponent implements OnInit {
   allpositions: Position[] = []
   employees: EmployeeInfo[] = [];
   alldepartments: Departments[] = [];
-  addEmployeeRequest: AddEmployee = {
-    name: '',
-    surname: '',
-    birthDate: null,
-    positionId: null,
-    managerId: null,
-    employeeDepartments: []
-  };
+  addEmployeeRequest: AddEmployee = new AddEmployee();
+  isManagerValid:boolean
+
   dropdownSettings: IDropdownSettings;
-  positionDropdownSettings: IDropdownSettings;
   employeeManagers: EmployeeMangers[] = [];
   managerEmployees: ManagerEmployees[] = [];
-  updateEmployee: UpdateEmployee = {
-    id: null,
-    name: '',
-    surname: '',
-    birthDate: null,
-    positionId: null,
-    managerId: null,
-    departments: [] = []
-  }
+  updateEmployee: UpdateEmployee = new UpdateEmployee();
   employeeId: number
-  isCloseStatus: any;
 
   @ViewChild('addemployee') private addemployeeModal: SharedModalComponent
   @ViewChild('editemployee') private editemployeeModal: SharedModalComponent
   @ViewChild('getemployeeMangers') private employeeManagersModal: SharedModalComponent
   @ViewChild('getMangerEmployee') private managerEmployeeModal: SharedModalComponent
   @ViewChild('deleteemployee') private deleteEmployeeModal: SharedModalComponent
-  @Input() parent:EmployeeComponent
-
-  addModalConfig: ModalConfig = {
-    modalTitle: 'Add Employee',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Add',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  editModalConfig: ModalConfig = {
-    modalTitle: 'Edit',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Edit',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  getMangersModalConfig: ModalConfig = {
-    modalTitle: 'Managers',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Ok',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  getManagersEmployeeModalConfig: ModalConfig = {
-    modalTitle: 'Employee',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Ok',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  deleteModalConfig: ModalConfig = {
-    modalTitle: 'Delete',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Delete',
-    buttonStyle: "btn btn-outline-danger"
-  }
+  @Input() parent: EmployeeComponent
+  @Input() employeeName:string
+  modalTitle:string='';
 
   constructor(
     private employeeServices: EmployeeService,
     private postionService: PositionService,
-    private departmentService: DepartmentService,) {
+    private departmentService: DepartmentService,
+    public modalConfig: ModalconfigService) {
 
   }
 
   ngOnInit(): void {
+    
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -106,8 +59,6 @@ export class EmployeemodalComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: false
     };
-
-
   }
 
   async openAddEmployeeModal() {
@@ -120,9 +71,11 @@ export class EmployeemodalComponent implements OnInit {
       this.alldepartments = result;
     });
 
-     this.employeeServices.getAllEmployees().subscribe(data => {
+    this.employeeServices.getAllEmployees().subscribe(data => {
       this.employees = data;
     });
+
+    console.log(this.addEmployeeRequest.name);
     return await this.addemployeeModal.open()
   }
 
@@ -130,7 +83,7 @@ export class EmployeemodalComponent implements OnInit {
 
     this.addEmployeeRequest.name = this.addEmployeeRequest.name.trim();
     this.addEmployeeRequest.surname = this.addEmployeeRequest.surname.trim();
-     this.employeeServices.addEmployee(this.addEmployeeRequest).subscribe(_=>{
+    this.employeeServices.addEmployee(this.addEmployeeRequest).subscribe(_ => {
       this.parent.refreshEmployee()
     });
     this.addemployeeModal.close()
@@ -139,27 +92,29 @@ export class EmployeemodalComponent implements OnInit {
   async openDeleteModal(employeeId: number) {
     this.employeeId = employeeId
     return await this.deleteEmployeeModal.open()
-
   }
 
   async deleteEmployee() {
-    (await this.employeeServices.deleteEmployee(this.employeeId)).subscribe(_=>{
+    (await this.employeeServices.deleteEmployee(this.employeeId)).subscribe(_ => {
       this.parent.refreshEmployee()
     });
     return this.deleteEmployeeModal.close()
   }
 
   async openEditModal(employeeId: number) {
+
+    (await this.employeeServices.getManagerEmployees(employeeId)).subscribe(result => {
+      this.managerEmployees = result;
+    });
+
     (await this.employeeServices.getEmployee(employeeId)).subscribe(result => {
       this.updateEmployee = result;
-    })
+    });
 
     this.postionService.getAllPostions().subscribe(result => {
       console.log(this.allpositions);
       this.allpositions = result;
-
-    })
-
+    });
 
     this.departmentService.getAllDepartments().subscribe(result => {
       console.log(result);
@@ -167,30 +122,43 @@ export class EmployeemodalComponent implements OnInit {
     });
 
     this.employeeServices.getAllEmployees().subscribe(data => {
-      this.employees = data;
+      this.employees = data.filter(employee => employee.id != employeeId)
     });
-
     return await this.editemployeeModal.open()
   }
 
   async editEmployee() {
-    this.employeeServices.editEmployee(this.updateEmployee.id, this.updateEmployee).subscribe(_=>{
+    this.employeeServices.editEmployee(this.updateEmployee.id, this.updateEmployee).subscribe({
+     next:(result)=>{
       this.parent.refreshEmployee();
-    });
+     },
+     error:(error)=>{
+      console.log(error.error.message)
+     }
+    })
     return this.editemployeeModal.close()
   }
 
-  async openGetEmployeeManagersModal(employeeId: number) {
+  async openGetEmployeeManagersModal(employeeId: number,employeeName:string) {
+    this.modalTitle=employeeName;
     (await this.employeeServices.getEmployeeManager(employeeId)).subscribe(result => {
       this.employeeManagers = result;
     })
     return await this.employeeManagersModal.open()
   }
 
-  async openGetManagerEmployees(employeeId: number) {
+  async openGetManagerEmployees(employeeId: number,employeeName:string) {
+    this.modalTitle=employeeName;
     (await this.employeeServices.getManagerEmployees(employeeId)).subscribe(result => {
       this.managerEmployees = result;
     })
     return await this.managerEmployeeModal.open()
   }
+
+  async Onselect(mangerId:number):Promise<boolean>{
+   
+    this.isManagerValid= this.managerEmployees.findIndex(emp => emp.id == mangerId) != -1;
+    return false;
+  }
+
 }

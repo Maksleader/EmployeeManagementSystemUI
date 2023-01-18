@@ -1,5 +1,4 @@
-export interface ModalConfig {
-    modalTitle: string
+export class ModalConfig {
     dismissButtonLabel?: string
     closeButtonLabel?: string
     buttonStyle:any

@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ModalConfig } from 'src/app/modals/modalConfig';
+import { Component, Input, ViewChild } from '@angular/core';
 import { SharedModalComponent } from 'src/app/modals/shared-modal/shared-modal.component';
 import { Departments } from 'src/app/models/department';
 import { DepartmentService } from 'src/app/services/department.service';
+import { ModalconfigService } from 'src/app/services/modalconfig.service';
 import { DepartmentComponent } from '../department.component';
 
 @Component({
@@ -12,18 +12,11 @@ import { DepartmentComponent } from '../department.component';
 })
 export class DepartmentmodalComponent {
 
-  departmentRequest:Departments=
-  {
-    id:null,
-    name:''
-  }
+  departmentRequest:Departments=new Departments()
 
-  addDepartmentRequest:Departments={
-    id:null,
-    name:''
-  }
+  addDepartmentRequest:Departments=new Departments();
 
-  constructor(private departmentService:DepartmentService){}
+  constructor(private departmentService:DepartmentService,public modalConfig:ModalconfigService){}
   isCloseStatus: any;
 
   @ViewChild('addDepartment') private addDepartmentModal: SharedModalComponent
@@ -31,29 +24,6 @@ export class DepartmentmodalComponent {
   @ViewChild('deleteDepartment') private deleteDepartmentModal: SharedModalComponent
   @Input() parent:DepartmentComponent;
 
-  addModalConfig: ModalConfig = {
-    modalTitle: 'Add Department',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Add',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  editModalConfig: ModalConfig = {
-    modalTitle: 'Edit',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Edit',
-    buttonStyle: "btn btn-outline-primary"
-  }
-
-  deleteModalConfig: ModalConfig = {
-    modalTitle: 'Delete',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Delete',
-    buttonStyle: "btn btn-outline-danger"
-  }
-
-
-  
   async openAddDepartmentModal() {
 
     return await this.addDepartmentModal.open()

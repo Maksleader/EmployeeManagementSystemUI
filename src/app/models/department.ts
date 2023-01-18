@@ -1,5 +1,6 @@
-export interface Departments {
+export class Departments {
 
     id: number;
     name: string;
+    createDate:Date
 }

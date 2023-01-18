@@ -11,13 +11,15 @@ import { UserAuthenticationService } from 'src/app/services/user-authentication.
 export class SignupComponent implements OnInit {
   type: string = "password";
   eyeIcon: string = "bi-eye";
-  signUpForm!: FormGroup
+  signUpForm!: FormGroup;
+  emailError:string
   constructor(private fb: FormBuilder,private authentication:UserAuthenticationService,private router:Router) {}
   
   ngOnInit(): void {
+    
     this.signUpForm = this.fb.group({
-      firstName: ["", Validators.required],
-      lastName: ["", Validators.required],
+      firstName: ["",[Validators.required,Validators.pattern("[a-zA-Z ]*")]],
+      lastName: ["", [Validators.required,Validators.pattern("[a-zA-Z ]*")]],
       email:["",[Validators.required,Validators.email]],
       userName: ["", Validators.required],
       password: ["", Validators.required],
@@ -35,15 +37,13 @@ export class SignupComponent implements OnInit {
       this.authentication.signUp(this.signUpForm.value)
       .subscribe({
         next:(res=>{
-          console.log(res.status)
           this.signUpForm.reset();
           document.location.href="/";
-        })
-        ,error:(err=>{
-          console.log(err.status)
-        })
+        }),
+        error(err) {
+          console.log(err.error.message);
+        },
       })
-      console.log(this.signUpForm.value);
     }
 
     else

@@ -11,6 +11,7 @@
                             <input formControlName="firstName" type="text" class="form-control" id="firstName" placeholder="First Name">
                         </div>
                         <small class="text-danger" *ngIf="signUpForm.controls['firstName'].dirty && signUpForm.hasError('required','firstName')">*First Name is required</small>
+                        <small class="text-danger" *ngIf="signUpForm.controls['firstName'].dirty && signUpForm.hasError('pattern','firstName')">*First Name should be all letters</small>
                     </div>
                     <div class="mb-3">
                         <div class="input-group" [class.error]="signUpForm.controls['lastName'].dirty && signUpForm.hasError('required','lastName')">
@@ -18,6 +19,7 @@
                             <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="Last Name">
                         </div>
                         <small class="text-danger" *ngIf="signUpForm.controls['lastName'].dirty && signUpForm.hasError('required','lastName')">*Last Name is required</small>
+                        <small class="text-danger" *ngIf="signUpForm.controls['lastName'].dirty && signUpForm.hasError('pattern','lastName')">*Last Name should be all letters</small>
                     </div>
 
                     <div class="mb-3">

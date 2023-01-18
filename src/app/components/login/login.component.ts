@@ -11,48 +11,58 @@ import { AuthenticationService } from 'src/app/services/authentication.services'
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  type:string="password";
+  type: string = "password";
   isText: boolean = false;
   eyeIcon: string = "bi-eye";
-  loginForm!:FormGroup;
+  loginForm!: FormGroup;
   constructor(
-    private  fb:FormBuilder,
+    private fb: FormBuilder,
+    public userAuthentication: UserAuthenticationService,
+    public config: ConfigService) { }
+    private tokenKey = "token";
+    isLoginInfo:boolean=true;
 
-    public userAuthentication:UserAuthenticationService,
-    private router:Router, public config:ConfigService,
-    private activatedRoute: ActivatedRoute,
-    private authentication:AuthenticationService){}
-    
   ngOnInit(): void {
-    this.loginForm=this.fb.group({
-      email:['',Validators.required],
-      password:['',Validators.required]
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required,Validators.email]],
+      password: ['', Validators.required]
     })
   }
   hideShowPassword() {
     this.isText = !this.isText;
     this.isText ? this.eyeIcon = "bi-eye-slash" : this.eyeIcon = "bi-eye";
-    this.isText ? this.type="text" : this.type="password";
-}
+    this.isText ? this.type = "text" : this.type = "password";
+  }
 
-async onSubmit(){
+  async onSubmit() {
+      if(this.loginForm.valid)
+      {
+        (await this.userAuthentication.login(this.loginForm.value)).subscribe({
+          next:(token)=>{
+            localStorage.setItem(this.tokenKey,token);
+            document.location.href="/"
+          },
+          error:(error)=>{
+            console.log(error);
+            this.isLoginInfo=false;
+          }
+        })
+      }
+      else
+      {
+        this.validateAllFormFields(this.loginForm);
+      }
+  }
 
-    await this.userAuthentication.login(this.loginForm.value,()=>{
-      document.location.href="/";
-    });
-}
-
-private validateAllFormFields(formGroup:FormGroup){
-  Object.keys(formGroup.controls).forEach(field=>{
-    const control=formGroup.get(field);
-    if(control instanceof FormControl)
-    {
-      control.markAsDirty({onlySelf:true})
-    }
-    else if(control instanceof FormGroup)
-    {
-      this.validateAllFormFields(control);
-    }
-  })
-}
+  private validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsDirty({ onlySelf: true })
+      }
+      else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    })
+  }
 }

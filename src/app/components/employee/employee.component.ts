@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeeInfo } from 'src/app/models/EmployeeInfo';
+import { AuthenticationService } from 'src/app/services/authentication.services';
+import { ConfigService } from 'src/app/services/config.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { ModalconfigService } from 'src/app/services/modalconfig.service';
 import { EmployeemodalComponent } from './employeemodal/employeemodal.component';
 
 @Component({
@@ -13,7 +16,7 @@ export class EmployeeComponent implements OnInit {
 
   @ViewChild(EmployeemodalComponent) modal:EmployeemodalComponent
 
-  constructor(private employeeServices:EmployeeService){}
+  constructor(private employeeServices:EmployeeService, public authService:AuthenticationService,private modalConfig:ModalconfigService){}
 
   ngOnInit() {
   this.refreshEmployee();
@@ -36,14 +39,14 @@ export class EmployeeComponent implements OnInit {
     this.modal.openEditModal(employeeId);
   }
 
-  showEmployeeManagersModal(employeeId:number){
-
-    this.modal.openGetEmployeeManagersModal(employeeId);
+  showEmployeeManagersModal(employeeId:number,employeeName:string){
+    this.modalConfig.setModaltitle=employeeName;
+    this.modal.openGetEmployeeManagersModal(employeeId,employeeName);
   }
 
-  showManagerEmployeeModal(employeeId:number){
+  showManagerEmployeeModal(employeeId:number,employeeName:string){
 
-    this.modal.openGetManagerEmployees(employeeId);
+    this.modal.openGetManagerEmployees(employeeId,employeeName);
   }
 
 

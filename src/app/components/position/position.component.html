@@ -6,16 +6,20 @@
             <tr>
               <th scope="col">Id</th>
               <th scope="col">Name</th>
-              <th scope="col">Actions</th>
+              <th scope="col">Create Date</th>
+              <th *ngIf="authService.hasPermission('Positions.Update') && authService.hasPermission('Positions.Delete') || authService.hasPermission('Positions.Delete')|| authService.hasPermission('Positions.Update') " scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let position of positions">
               <th scope="row">{{position.id}}</th>
               <td>{{position.name}}</td>
-              <td>
-                <button type="button" class="btn btn-success" style="margin-right: 5px;" (click)="showEditpositionModal(position.id)"><i class="bi bi-pencil"></i></button>
-                <button type="button" class="btn btn-danger" (click)="showDeletePositionModal(position.id)"><i class="bi bi-trash-fill"></i></button>
+              <td>{{position.createDate|date:"dd/MM/yyyy"}}</td>
+              <td  *ngIf="authService.hasPermission('Positions.Update') && authService.hasPermission('Positions.Delete') || authService.hasPermission('Positions.Delete')|| authService.hasPermission('Positions.Update') ">
+
+                <button *ngIf="authService.hasPermission('Positions.Update')" type="button" class="btn btn-success" style="margin-right: 5px;" (click)="showEditpositionModal(position.id)"><i class="bi bi-pencil"></i></button>
+                <button *ngIf="authService.hasPermission('Positions.Delete')" type="button" class="btn btn-danger" (click)="showDeletePositionModal(position.id)"><i class="bi bi-trash-fill"></i></button>
+                
               </td>
             </tr>
           </tbody>
@@ -23,8 +27,8 @@
       </div>
     </div>
     <div class="row-flex">
-      <button class="btn btn-lg btn-outline-primary" style="margin-left: 21.5cm;" (click)="showAddpositionModal()">
-        Add Postion
+      <button class="btn btn-lg btn-outline-primary" *ngIf="authService.hasPermission('Positions.Create')" style="margin-left: 21.5cm;" (click)="showAddpositionModal()">
+        Add Position
     </button>
     </div>
   </div>

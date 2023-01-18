@@ -1,4 +1,4 @@
-<app-shared-modal #permission [modalConfig]="modalConfig" (newConfirmationEvent)="addOrDeletePermisionFromUser()">
+<app-shared-modal #permission [modalConfig]="modalConfig.getUserModalConfig" (newConfirmationEvent)="addOrDeletePermisionFromUser()">
     <div class="container my-5">
         <form #form="ngForm">
          

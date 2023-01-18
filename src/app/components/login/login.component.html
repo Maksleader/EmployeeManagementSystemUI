@@ -12,6 +12,7 @@
                                 placeholder="Email Adress">
                         </div>
                         <small class="text-danger" *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required','email')">*Email Adress is required</small>
+                        <small class="text-danger" *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('email','email')">*Email Address is not proper</small>
                     </div>
                   
                     <div class="mb-3">
@@ -28,6 +29,9 @@
                     <div id="emailHelp" class="form-text text-center mb-2 text-dark">Not
                         Registered? <a routerLink="/signup" class="text-dark fw-bold"> Create an
                             Account</a>
+                    </div>
+                    <div class="text-center">
+                        <small *ngIf="!isLoginInfo" class="text-danger">Please check your email address or password</small>
                     </div>
                 </form>
             </div>

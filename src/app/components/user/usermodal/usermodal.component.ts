@@ -6,6 +6,7 @@ import { AddPermissionToUser } from 'src/app/models/addPersmissionToUser';
 import { Permission } from 'src/app/models/permission';
 import { User } from 'src/app/models/user';
 import { ConfigService } from 'src/app/services/config.service';
+import { ModalconfigService } from 'src/app/services/modalconfig.service';
 import { PermissionService } from 'src/app/services/permission.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserComponent } from '../user.component';
@@ -22,16 +23,13 @@ export class UsermodalComponent implements OnInit {
     userId: 0,
     userPermissions: []
   };
-  modalConfig: ModalConfig = {
-    modalTitle: 'Permissions',
-    dismissButtonLabel: 'Cancel',
-    closeButtonLabel: 'Ok',
-    buttonStyle: "btn btn-outline-primary"
-  }
 
   @ViewChild('permission') private permissionModal: SharedModalComponent
   @Input() parent: UserComponent
-  constructor(private userInfo: ConfigService, private permissionService: PermissionService,private userService:UserService) { }
+  constructor(private userInfo: ConfigService, 
+    private permissionService: PermissionService,
+    private userService:UserService,
+    public modalConfig:ModalconfigService) { }
 
   ngOnInit(): void {
     this.dropdownSettings = {

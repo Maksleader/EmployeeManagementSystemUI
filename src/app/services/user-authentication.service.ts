@@ -13,21 +13,15 @@ export class UserAuthenticationService {
     @Inject('baseUrl') private baseUrl: string
     ) { }
   signUp(userObject: any) {
-    return this.http.post(`${this.baseUrl}/User/register`,userObject,
+    return this.http.post(`${this.baseUrl}/Authentication/register`,userObject,
     {
-      observe:"response"
+      observe:"response",
+      
     });
   }
 
- async login(loginObject:FormBuilder,callBackFunction?: () => void
-  ): Promise<any> {
-   this.http.post(`${this.baseUrl}/User/login`,loginObject,{responseType: 'text'}).
-   subscribe({
-    next:(token)=>{
-      localStorage.setItem(this.tokenKey,token);
-      callBackFunction();
-     }
-   })
+ async login(loginObject:FormBuilder) {
+    return this.http.post(`${this.baseUrl}/Authentication/login`,loginObject,{responseType: 'text'})
   }
 }
 
