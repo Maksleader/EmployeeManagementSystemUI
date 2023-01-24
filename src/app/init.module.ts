@@ -1,31 +1,32 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { APP_INITIALIZER } from '@angular/core';
-import { ConfigService } from './services/config.service';
-import { interval, Observable, take, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Inject, NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { APP_INITIALIZER } from "@angular/core";
+import { ConfigService } from "./services/config.service";
+import { Observable, tap } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { GlobalConstants } from "./models/globalConstants";
 
 function initializeAppFactory(httpClient: HttpClient, configService: ConfigService): () => Observable<any> {
-  console.log('starting backend api call');
-  
-  return () => httpClient.get("https://localhost:7180/api/Config/config")
+  return () => httpClient.get(`${GlobalConstants.apiURL}/Config/config`)
     .pipe(
-       tap(result => {
-         configService.userconfig = result;
-        })
+      tap(result => {
+        configService.userconfig = result;
+      })
     );
- }
+}
 
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  providers:[{
-    provide:APP_INITIALIZER,
-    multi:true,
+  providers: [{
+    provide: APP_INITIALIZER,
+    multi: true,
     useFactory: initializeAppFactory,
-    deps:[HttpClient, ConfigService]
+    deps: [HttpClient, ConfigService]
   }]
 })
-export class InitModule { }
+export class InitModule {
+  constructor(@Inject("baseUrl") private baseUrl: string) { }
+}

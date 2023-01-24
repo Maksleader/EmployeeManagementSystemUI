@@ -1,5 +1,9 @@
 <div class="container my" style="max-width: 1500px;">
-    <table class="table table-lg" *ngIf="employees && employees.length>0">
+    <button class="btn btn-lg btn-outline-primary" *ngIf="authService.hasPermission('Employees.Create')"
+        style="width: 1256px; margin-bottom: 5px;" (click)="showAddemployeeModal()">
+        Add Employee
+    </button>
+    <table class="table table-bordered table-lg" *ngIf="employees && employees.length>0">
         <thead>
             <tr style="text-align: center;">
                 <th>Id</th>
@@ -9,10 +13,7 @@
                 <th>Postion</th>
                 <th>Manager</th>
                 <th>Departments</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th> Actions</th>
             </tr>
         </thead>
         <tbody style="text-align: center;">
@@ -20,28 +21,34 @@
                 <td>{{employee.id}}</td>
                 <td style="color: black;">{{employee.name}}</td>
                 <td>{{employee.surname}}</td>
-                <td>{{employee.birthDate | date:'dd/MM/yyyy' }}</td>
+                <td>{{employee.birthDate | dateFormat }}</td>
                 <td>{{employee.position}}</td>
                 <td>{{employee.manager}}</td>
                 <td>
-                    <p style="float:right;" *ngFor="let departments of employee.employeeDepartments">{{departments.name + ', '}}</p>
+                    <p style="float:right;" *ngFor="let departments of employee.employeeDepartments">{{departments.name
+                        + ', '}}</p>
                 </td>
-                <td> <button *ngIf="authService.hasPermission('Employees.Managers')" class=" btn btn-outline-info" (click)="showEmployeeManagersModal(employee.id,employee.name)">See All Managers</button></td>
-                <td> <button *ngIf="authService.hasPermission('Employees.ManagerEmployees')" class=" btn btn-outline-info" (click)="showManagerEmployeeModal(employee.id,employee.name)">See All Managers Employee</button></td>
-                <td> <button *ngIf="authService.hasPermission('Employees.Update')" class=" btn btn-outline-warning" (click)="showeditModal(employee.id)">Edit</button></td>
-                <td> <button *ngIf="authService.hasPermission('Employees.Delete')" class=" btn btn-outline-danger" (click)="showDeleteModal(employee.id)">Delete</button></td>
-                <app-employeemodal [employeeName]="employee.name" [parent]="this"></app-employeemodal>
+                <td>
+                    <button style="margin-right: 5px;" *ngIf="authService.hasPermission('Employees.Managers')"
+                        class=" btn btn-info" (click)="showEmployeeManagersModal(employee.id,employee.name)">See All
+                        Managers</button>
+                    <button style="margin-right: 5px;" *ngIf="authService.hasPermission('Employees.ManagerEmployees')"
+                        class=" btn btn-info" (click)="showManagerEmployeeModal(employee.id,employee.name)">See All
+                        Managers Employee</button>
+                    <button style="margin-right: 5px;" *ngIf="authService.hasPermission('Employees.Update')"
+                        class="btn btn-success" (click)="showeditModal(employee.id)">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button *ngIf="authService.hasPermission('Employees.Delete')" class=" btn btn-danger"
+                        (click)="showDeleteModal(employee.id)">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                    <app-employeemodal [employeeName]="employee.name" [parent]="this"></app-employeemodal>
+                </td>
             </tr>
         </tbody>
+
     </table>
-    <p *ngIf="!employees">No Employees Found</p>
+    <p *ngIf="employees.length===0">No Employees Found</p>
+    <app-employeemodal [parent]="this"></app-employeemodal>
 </div>
-
-
-<button class="btn btn-lg btn-outline-primary" *ngIf="authService.hasPermission('Employees.Create')" (click)="showAddemployeeModal()">
-    Add Employee
-</button>
-
-
-
-

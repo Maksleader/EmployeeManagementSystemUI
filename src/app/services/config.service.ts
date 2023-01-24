@@ -1,18 +1,20 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { UserInfo } from '../models/UserInfo';
+import { Injectable } from "@angular/core";
+import { UserInfo } from "../models/UserInfo";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ConfigService {
 
-   userconfig :UserInfo;
-  constructor(private http:HttpClient) { }
-  
-  get getconfig():UserInfo{
+  userconfig: UserInfo = new UserInfo();
+
+  get getconfig(): UserInfo {
     return this.userconfig
-   }
-  
+  }
+
+  set setconfig(config: UserInfo) {
+    this.userconfig = config;
+  }
+
 }
 

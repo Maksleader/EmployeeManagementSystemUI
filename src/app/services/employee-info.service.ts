@@ -1,27 +1,25 @@
-import { HttpClient } from '@angular/common/http';
-import {  Inject, Injectable } from '@angular/core';
-import { EmployeeInfo } from '../models/EmployeeInfo';
+import { HttpClient } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
+import { EmployeeInfo } from "../models/EmployeeInfo";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class EmployeeInfoService {
 
 
   constructor(
-  private http:HttpClient,
-  @Inject('baseUrl') private baseUrl: string) { }
+    private http: HttpClient,
+    @Inject("baseUrl") private baseUrl: string) { }
 
-    get employee()
-    {
-      return _employeeInfo;
-    }
-  
+  get employee() {
+    return _employeeInfo;
+  }
 
-   getEmployeeInfo()
-  {
+
+  getEmployeeInfo() {
     return this.http.get<EmployeeInfo>(`${this.baseUrl}/UserProfile/getEmployeeInfo`)
   }
 }
 
-export let _employeeInfo:EmployeeInfo
+export let _employeeInfo: EmployeeInfo

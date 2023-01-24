@@ -25,12 +25,12 @@
                   <label for="age" class="form-label">Age</label>
                   <p>{{employeeAge}}</p>
                 </div>
-                  <div class="col-6 mb-3">
-                    <label for="departments" class="form-label">Departments</label>
-                    <ng-container>
-                      <p *ngFor="let departments of employee?.employeeDepartments">{{departments.name + ','}}</p>
+                <div class="col-6 mb-3">
+                  <label for="departments" class="form-label">Departments</label>
+                  <ng-container>
+                    <p *ngFor="let departments of employee?.employeeDepartments">{{departments.name + ','}}</p>
                   </ng-container>
-                  </div>
+                </div>
                 <div class="col-6 mb-3">
                   <label for="position" class="form-label">Position</label>
                   <p style="color: black;">{{employee?.position}}</p>

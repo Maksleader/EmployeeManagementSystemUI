@@ -6,21 +6,15 @@
     <ng-content></ng-content>
   </div>
   <div class="modal-footer">
-    <button type="button"
-    class={{modalConfig.buttonStyle}}
-    (click)="dismiss()"
-    *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()"
-    [disabled]="modalConfig.disableDismissButton !== undefined && modalConfig.disableDismissButton()">
-{{ modalConfig.dismissButtonLabel }}
-</button>
+    <button type="button" class={{modalConfig.buttonStyle}} (click)="dismiss()"
+      *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()"
+      [disabled]="modalConfig.disableDismissButton !== undefined && modalConfig.disableDismissButton()">
+      {{ modalConfig.dismissButtonLabel }}
+    </button>
 
-<button type="button"
-
-    class={{modalConfig.buttonStyle}}
-    (click)="close()"
-    *ngIf="modalConfig.hideCloseButton === undefined || !modalConfig.hideCloseButton()"
-    [disabled]="modalConfig.disableCloseButton !== undefined && modalConfig.disableCloseButton()">
-{{ modalConfig.closeButtonLabel }}
-</button>
-</div>
+    <button type="button" class={{modalConfig.buttonStyle}} (click)="this.newConfirmationEvent.emit();"
+      *ngIf="modalConfig.hideCloseButton === undefined || !modalConfig.hideCloseButton()" [disabled]="groupForm">
+      {{ modalConfig.closeButtonLabel }}
+    </button>
+  </div>
 </ng-template>

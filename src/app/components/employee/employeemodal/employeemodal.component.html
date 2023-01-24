@@ -1,84 +1,103 @@
-<app-shared-modal id="addemployee" formName="addForm" modaltTitle="Add Employee" [child]="this" #addemployee
-    [modalConfig]="modalConfig.addModalConfig" (newConfirmationEvent)="addEmployee()">
+<app-shared-modal (closeModal)="closeAddEmployeeModal(groupForm)" [groupForm]='groupForm.invalid'
+    modaltTitle="Add Employee" #addemployee [modalConfig]="modalConfig.addModalConfig"
+    (newConfirmationEvent)="addEmployee(groupForm)">
 
-    <div class="container my-3">
-        <form id="addForm" #form="ngForm">
-            <div class="form-group mb-3">
-                <label for="name">Name</label>
-                <input type="text" aria-required="\S" title="This field is required" class="form-control" id="name"
-                    name="name" [(ngModel)]="addEmployeeRequest.name" [ngModelOptions]="{standalone: true}"
-                    placeholder="Name">
-            </div>
-            <div class="form-group mb-3">
-                <label for="surname">Surname</label>
-                <input type="text" class="form-control" id="surname" surname="surname"
-                    [(ngModel)]="addEmployeeRequest.surname" [ngModelOptions]="{standalone: true}"
-                    placeholder="Surname">
-            </div>
-            <div class="form-group mb-3">
-                <label for="position">Position</label>
-                <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="position"
-                    position="position" [(ngModel)]="addEmployeeRequest.positionId"
-                    [ngModelOptions]="{standalone: true}">
-                    <option value=null selected>--Select Position--</option>
-                    <option *ngFor="let postion of allpositions" value={{postion.id}}>{{postion?.name}}</option>
-                </select>
-            </div>
+    <form name='groupForm' #groupForm="ngForm">
+        <div class="form-group mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" ngModel placeholder="Name" required
+                pattern="[a-zA-Z]{1,20}" #name="ngModel">
+        </div>
+        <div style="color:red" *ngIf="name.errors && (name.dirty || name.touched)">
+            <p *ngIf="name.errors['required']">
+                Name is required
+            </p>
+            <p *ngIf="name.errors['pattern']">
+                Name must be all letters
+            </p>
+        </div>
+        <div class="form-group mb-3">
+            <label for="surname">Surname</label>
+            <input required pattern="[a-zA-Z]{1,20}" type="text" class="form-control" id="surname" name="surname"
+                #surname="ngModel" ngModel placeholder="Surname">
+        </div>
+        <div style="color:red" *ngIf="surname.errors && (surname.dirty || surname.touched)">
+            <p *ngIf="surname.errors['required']">
+                Surnameis required
+            </p>
+            <p *ngIf="surname.errors['pattern']">
+                Name must be all letters
+            </p>
+        </div>
+        <div class="form-group mb-3">
+            <label for="positionId">Position</label>
+            <select class="form-select form-select-md mb-3" id="positionId" name="positionId" #positionId="ngModel"
+                ngModel>
+                <option [value]="positionId.value" selected>--Select Position--</option>
+                <option *ngFor="let postion of allpositions" value={{postion.id}}>{{postion?.name}}</option>
 
-            <div class="form-group mb-3">
-                <label for="department">Departments</label>
-                <ng-multiselect-dropdown id="department" [placeholder]="'--Select Departments--'"
-                    [settings]="dropdownSettings" [data]="alldepartments"
-                    [(ngModel)]="addEmployeeRequest.employeeDepartments" [ngModelOptions]="{standalone: true}">
-                </ng-multiselect-dropdown>
+            </select>
+        </div>
 
-            </div>
+        <div class="form-group mb-3">
+            <label for="department">Departments</label>
+            <ng-multiselect-dropdown class="form-group mb-3" name="employeeDepartments" id="employeeDepartments"
+                [placeholder]="'--Select Departments--'" [settings]="dropdownSettings" [data]="alldepartments" ngModel
+                #employeeDepartments="ngModel">
+            </ng-multiselect-dropdown>
 
-            <div class="form-group mb-3">
-                <label for="manager">Manager</label>
-                <select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" id="manager"
-                    manager="manager" [(ngModel)]="addEmployeeRequest.managerId" [ngModelOptions]="{standalone: true}">
-                    <option value=null selected>--Select Manager--</option>
-                    <option *ngFor="let manager of employees" value={{manager.id}}>{{manager?.name}}</option>
-                </select>
-            </div>
-            <div class="form-group mb-3">
-                <label for="birthdate">Birth Date</label>
-                <input class="form-control" birthdate="birthdate" [(ngModel)]="addEmployeeRequest.birthDate"
-                    [ngModelOptions]="{standalone: true}" type="date" id="birthdate">
-            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="managerId">Manager</label>
+            <select class="form-select form-select-md mb-3" id="managerId" name="managerId" #managerId="ngModel"
+                ngModel>
+                <option [value]="managerId.value" selected>--Select Manager--</option>
+                <option *ngFor="let manager of employees" value={{manager.id}}>{{manager?.name}}</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="birthdate">Birth Date</label>
+            <input required class="form-control" name="birthdate" required #birthdate="ngModel" ngModel type="date"
+                id="birthdate">
+        </div>
+        <div style="color:red" *ngIf="birthdate.errors && (birthdate.dirty || birthdate.touched)">
+            <p *ngIf="birthdate.errors['required']">
+                Birth Date is required
+            </p>
+        </div>
+    </form>
+</app-shared-modal>
+
+<app-shared-modal #getemployeeMangers (closeModal)="closeGetEmployeeManagersModal"
+    [modalConfig]="modalConfig.employeeMangersModalConfig" [modaltTitle]="modalTitle+ '\'s' +' ' + 'Managers'">
+    <div class="container my" style="max-width: 1500px;">
+        <form>
+            <table id="Form" class="table table-bordered table-lg">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Managing Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let manager of employeeManagers">
+                        <td>{{manager.id}}</td>
+                        <td style="color: black;">{{manager.name}}</td>
+                        <td>{{manager.surname}}</td>
+                        <td>{{manager.managingLevel}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </form>
     </div>
-
-
 </app-shared-modal>
 
-<app-shared-modal #getemployeeMangers [modalConfig]="modalConfig.employeeMangersModalConfig"
-    [modaltTitle]="modalTitle+ '\'s' +' ' + 'Managers'">
-    <div class="container my" style="max-width: 1500px;">
-        <table class="table table-bordered table-lg">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Managing Level</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let manager of employeeManagers">
-                    <td>{{manager.id}}</td>
-                    <td style="color: black;">{{manager.name}}</td>
-                    <td>{{manager.surname}}</td>
-                    <td>{{manager.managingLevel}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</app-shared-modal>
-
-<app-shared-modal #getMangerEmployee [modalConfig]="modalConfig.managersEmployeeModalConfig"
-    [modaltTitle]="modalTitle+ '\'s' +' ' + 'Employees'">
+<app-shared-modal #getMangerEmployee (closeModal)="closeGetManagerEmployeesModal()"
+    [modalConfig]="modalConfig.managersEmployeeModalConfig" [modaltTitle]="modalTitle+ '\'s' +' ' + 'Employees'">
     <div class="container my" style="max-width: 1500px;">
         <table class="table table-bordered table-lg">
             <thead>
@@ -99,25 +118,45 @@
     </div>
 </app-shared-modal>
 
-<app-shared-modal #editemployee modaltTitle="Edit Employee" [modalConfig]="modalConfig.editModalConfig"
+<app-shared-modal #editemployee modaltTitle="Edit Employee" [groupForm]='isManagerInvalid||isEditNameandSurnameInvalid'
+    (closeModal)="closeEditEmployeeModal(groupForm)" [modalConfig]="modalConfig.editModalConfig"
     (newConfirmationEvent)="editEmployee()">
     <div class="container my-3">
-        <form #form="ngForm">
+        <form name='groupForm' #groupForm="ngForm">
             <div class="form-group mb-3">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="updateEmployee.name"
-                    [ngModelOptions]="{standalone: true}" placeholder="Name">
+                <input (input)="stateChange(updateEmployee.name)" required pattern="[a-zA-Z]{1,20}" type="text"
+                    class="form-control" id="edit_name" name="edit_name" [(ngModel)]="updateEmployee.name"
+                    [ngModelOptions]="{standalone: true}" placeholder="Name" #edit_name="ngModel">
+            </div>
+            <div style="color:red" *ngIf="edit_name.errors && (edit_name.dirty || edit_name.touched) ">
+                <p *ngIf="edit_name.errors['required']">
+                    Name is required
+                </p>
+                <p *ngIf="edit_name.errors['pattern']">
+                    Name must be all letters
+                </p>
             </div>
             <div class="form-group mb-3">
                 <label for="surname">Surname</label>
-                <input type="text" class="form-control" id="surname" surname="surname"
-                    [(ngModel)]="updateEmployee.surname" [ngModelOptions]="{standalone: true}" placeholder="Surname">
+                <input (input)="stateChange(updateEmployee.name)" required pattern="[a-zA-Z]{1,20}" type="text"
+                    class="form-control" id="edit_surname" name="edit_surname" [(ngModel)]="updateEmployee.surname"
+                    [ngModelOptions]="{standalone: true}" #edit_surname="ngModel" placeholder="Surname">
+            </div>
+            <div style="color:red" *ngIf="edit_surname.errors && (edit_surname.dirty || edit_surname.touched)">
+                <p *ngIf="edit_surname.errors['required']">
+                    Surname is required
+                </p>
+                <p *ngIf="edit_surname.errors['pattern']">
+                    Surname must be all letters
+                </p>
             </div>
 
             <div class="form-group mb-3">
                 <label for="position">Positions</label>
-                <ng-select id="position" class="custom" [items]="allpositions" bindLabel="name" bindValue="id"
-                    [(ngModel)]="updateEmployee.positionId" [ngModelOptions]="{standalone: true}">
+                <ng-select id="position" class="custom" [placeholder]="'Select Positions'" [items]="allpositions"
+                    bindLabel="name" bindValue="id" [(ngModel)]="updateEmployee.positionId"
+                    [ngModelOptions]="{standalone: true}">
                 </ng-select>
             </div>
 
@@ -133,19 +172,20 @@
             <div class="form-group mb-3">
                 <label for="manager">Manager</label>
                 <div class="form-group mb-3">
-                    <ng-select id="manager" class="custom" [items]="employees" bindLabel="name" bindValue="id"
-                        (click)="Onselect(updateEmployee.managerId)" [(ngModel)]="updateEmployee.managerId"
-                        [ngModelOptions]="{standalone: true}">
+                    <ng-select id="manager" class="custom" [placeholder]="'Select Manager'" [searchable]='false'
+                        [markFirst]="false" dropdownPosition="bottom" [items]="employees" bindLabel="name"
+                        bindValue="id" (click)="Onselect(updateEmployee.managerId)"
+                        [(ngModel)]="updateEmployee.managerId" [ngModelOptions]="{standalone: true}">
                     </ng-select>
                 </div>
-                <small class="text-danger" *ngIf="isManagerValid">*Employee can't be a assaign to his manager</small>
+                <small class="text-danger" *ngIf="isManagerInvalid">*Employee can't be a assaign to his manager</small>
 
             </div>
 
             <div class="form-group mb-3">
                 <label for="birthdate">Birth Date</label>
-                <input class="form-control" name="birthdate" [(ngModel)]="updateEmployee.birthDate "
-                    [ngModelOptions]="{standalone: true}" type="date" id="birthdate">
+                <input type="date" id="birthdate" name="testdate" class="form-control" #myDate
+                    [(ngModel)]="updateEmployee.birthDate" />
             </div>
         </form>
     </div>

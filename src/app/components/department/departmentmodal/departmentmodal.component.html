@@ -1,27 +1,41 @@
-<app-shared-modal #addDepartment modaltTitle="Add Department" formName="addForm" [modalConfig]="modalConfig.addModalConfig" (newConfirmationEvent)="addDepartmentnModal()">
+<app-shared-modal #addDepartment modaltTitle="Add Department" [groupForm]="form.invalid"
+    [modalConfig]="modalConfig.addModalConfig" (newConfirmationEvent)="addDepartmentnModal(form)"
+    (closeModal)="closeAddDepartmentModal(form)">
     <div class="container my-5">
         <form id="addForm" #form="ngForm">
             <div class="form-group mb-3">
-                <input type="text" title="This field is required" class="form-control" id="department" name="department" [(ngModel)]="addDepartmentRequest.name"
-                    [ngModelOptions]="{standalone: true}" placeholder="Name" >
+                <input required pattern="[a-zA-Z\s]{1,20}" type="text" title="This field is required"
+                    class="form-control" id="name" name="name" ngModel #name="ngModel" placeholder="Name" />
             </div>
         </form>
     </div>
-
+    <div style="color: red" *ngIf="name.errors && (name.dirty || name.touched)">
+        <p *ngIf="name.errors['required']">Name is required</p>
+        <p *ngIf="name.errors['pattern']">Name must be all letters</p>
+    </div>
 </app-shared-modal>
 
-<app-shared-modal #editDepartment modaltTitle="Edit Department" [modalConfig]="modalConfig.editModalConfig"(newConfirmationEvent)="editDepartmentnModal()">
+<app-shared-modal #editDepartment modaltTitle="Edit Department" [groupForm]="isEditNameInvalid"
+    [modalConfig]="modalConfig.editModalConfig" (newConfirmationEvent)="editDepartmentnModal()"
+    (closeModal)="closeEditDepartmentModal(form)">
     <div class="container my-5">
         <form #form="ngForm">
             <div class="form-group mb-3">
                 <label for="department">Name</label>
-                <input type="text"  class="form-control" id="department" name="department" [(ngModel)]="departmentRequest.name"
-                 [ngModelOptions]="{standalone: true}" placeholder="Name" >
-            </div>      
+                <input (input)="stateChange(updateDepartmentRequest.name)" required pattern="[a-zA-Z\s]{1,20}"
+                    type="text" class="form-control" id="edit_name" name="edit_name"
+                    [(ngModel)]="updateDepartmentRequest.name" #edit_name="ngModel"
+                    [ngModelOptions]="{ standalone: true }" placeholder="Name" />
+            </div>
+            <div style="color: red" *ngIf="edit_name.errors && (edit_name.dirty || edit_name.touched)">
+                <p *ngIf="edit_name.errors['required']">Name is required</p>
+                <p *ngIf="edit_name.errors['pattern']">Name must be all letters</p>
+            </div>
         </form>
     </div>
 </app-shared-modal>
 
-<app-shared-modal #deleteDepartment modaltTitle="Delete Department" [modalConfig]="modalConfig.deleteModalConfig" (newConfirmationEvent)="deleteDepartmentnModal()">
-    <p  class="text-danger">Are you sure to delete ?</p>
+<app-shared-modal #deleteDepartment modaltTitle="Delete Department" [modalConfig]="modalConfig.deleteModalConfig"
+    (newConfirmationEvent)="deleteDepartmentnModal()">
+    <p class="text-danger">Are you sure to delete ?</p>
 </app-shared-modal>

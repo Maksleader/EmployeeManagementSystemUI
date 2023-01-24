@@ -15,37 +15,44 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="employee"
-              *ngIf="authService.hasPermission('Employees')">Employees
+              *ngIf="authService.hasPermission('Employees') && authService.isAuthenticated">Employees
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="position"
-              *ngIf="authService.hasPermission('Positions')">Positions
+              *ngIf="authService.hasPermission('Positions') && authService.isAuthenticated">Positions
             </a>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="department"
-              *ngIf="authService.hasPermission('Departments') ">Departments
+              *ngIf="authService.hasPermission('Departments')&& authService.isAuthenticated ">Departments
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="users"
-              *ngIf="authService.hasPermission('Users')">Users
+              *ngIf="authService.hasPermission('Users') && authService.isAuthenticated ">Users
             </a>
           </li>
 
           <li class="nav-item">
-            <a   class="nav-link active" aria-current="page" routerLink="signup" *ngIf="!authService.isAuthenticated">
+            <a class="nav-link active" aria-current="page" routerLink="signup" *ngIf="!authService.isAuthenticated">
               Register
             </a>
           </li>
-     
+
         </ul>
+        <div>
+
+        </div>
         <div ngbDropdown class="d-inline-block">
           <button *ngIf="authService.isAuthenticated" type="button" class="btn btn-outline-primary" id="dropdownBasic1"
             ngbDropdownToggle>
-            <i class="bi bi-person-circle"></i>
+            <div class="d-inline-block">
+              <i class="bi bi-person-circle"></i>
+              <p>{{userInfo.userconfig.user.email}}</p>
+            </div>
+
           </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div ngbDropdownMenu style="width: auto; justify-content: center;" aria-labelledby="dropdownBasic1">
             <button (click)="gotoProfile()" ngbDropdownItem>Profile</button>
             <button (click)="signOut()" ngbDropdownItem> Sign Out</button>
           </div>

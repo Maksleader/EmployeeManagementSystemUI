@@ -1,20 +1,20 @@
-import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { AddEmployee } from '../models/addEmployee';
-import { EmployeeInfo } from '../models/EmployeeInfo';
-import { EmployeeMangers } from '../models/employeeManagers';
-import { ManagerEmployees } from '../models/managerEmployees';
-import { UpdateEmployee } from '../models/updateEmployee';
+import { HttpClient } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { AddEmployee } from "../models/addEmployee";
+import { EmployeeInfo } from "../models/EmployeeInfo";
+import { EmployeeMangers } from "../models/employeeManagers";
+import { ManagerEmployees } from "../models/managerEmployees";
+import { UpdateEmployee } from "../models/updateEmployee";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class EmployeeService {
 
   constructor(
     private http: HttpClient,
-    @Inject('baseUrl') private baseUrl: string,
+    @Inject("baseUrl") private baseUrl: string,
   ) { }
 
 

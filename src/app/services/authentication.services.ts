@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
-import { ConfigService } from './config.service';
+import { Injectable } from "@angular/core";
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { ConfigService } from "./config.service";
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthenticationService {
-  constructor(private jwtHelperService: JwtHelperService,private userInfo:ConfigService) {}
+  constructor(private jwtHelperService: JwtHelperService, private userInfo: ConfigService) { }
 
   identityCheck() {
-    const token: string = localStorage.getItem('token');
+    const token: string = localStorage.getItem("token");
     let isExpired: boolean;
     try {
       isExpired = this.jwtHelperService.isTokenExpired(token);
     } catch {
       isExpired = true;
+
     }
     _isAuthenticated = token != null && !isExpired;
   }
@@ -29,8 +29,6 @@ export class AuthenticationService {
     }
     return false;
   }
-
-  
 }
 
 export let _isAuthenticated: boolean;

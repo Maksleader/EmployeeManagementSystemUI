@@ -1,56 +1,55 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { EmployeeInfo } from 'src/app/models/EmployeeInfo';
-import { AuthenticationService } from 'src/app/services/authentication.services';
-import { ConfigService } from 'src/app/services/config.service';
-import { EmployeeService } from 'src/app/services/employee.service';
-import { ModalconfigService } from 'src/app/services/modalconfig.service';
-import { EmployeemodalComponent } from './employeemodal/employeemodal.component';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { EmployeeInfo } from "src/app/models/EmployeeInfo";
+import { AuthenticationService } from "src/app/services/authentication.services";
+import { EmployeeService } from "src/app/services/employee.service";
+import { ModalconfigService } from "src/app/services/modalconfig.service";
+import { EmployeemodalComponent } from "./employeemodal/employeemodal.component";
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss'],
+  selector: "app-employee",
+  templateUrl: "./employee.component.html",
+  styleUrls: ["./employee.component.scss"],
 })
 export class EmployeeComponent implements OnInit {
-  employees:EmployeeInfo[]=[];
+  employees: EmployeeInfo[] = [];
 
-  @ViewChild(EmployeemodalComponent) modal:EmployeemodalComponent
+  @ViewChild(EmployeemodalComponent) modal: EmployeemodalComponent
 
-  constructor(private employeeServices:EmployeeService, public authService:AuthenticationService,private modalConfig:ModalconfigService){}
+  constructor(private employeeServices: EmployeeService,
+    public authService: AuthenticationService,
+    private modalConfig: ModalconfigService,) { }
 
   ngOnInit() {
-  this.refreshEmployee();
- }
+    this.refreshEmployee();
+  }
 
-  refreshEmployee()
- {
-  this.employeeServices.getAllEmployees().subscribe({
-    next:(result=>{
-      this.employees=result;
+  refreshEmployee() {
+    this.employeeServices.getAllEmployees().subscribe({
+      next: (result => {
+        this.employees = result;
+      })
     })
-  })
-  }
-    
-  showAddemployeeModal(){
-   this.modal.openAddEmployeeModal();
   }
 
-  showeditModal(employeeId:number){
+  showAddemployeeModal() {
+    this.modal.openAddEmployeeModal();
+  }
+
+  showeditModal(employeeId: number) {
     this.modal.openEditModal(employeeId);
   }
 
-  showEmployeeManagersModal(employeeId:number,employeeName:string){
-    this.modalConfig.setModaltitle=employeeName;
-    this.modal.openGetEmployeeManagersModal(employeeId,employeeName);
+  showEmployeeManagersModal(employeeId: number, employeeName: string) {
+    this.modalConfig.setModaltitle = employeeName;
+    this.modal.openGetEmployeeManagersModal(employeeId, employeeName);
   }
 
-  showManagerEmployeeModal(employeeId:number,employeeName:string){
+  showManagerEmployeeModal(employeeId: number, employeeName: string) {
 
-    this.modal.openGetManagerEmployees(employeeId,employeeName);
+    this.modal.openGetManagerEmployeesModal(employeeId, employeeName);
   }
 
-
-  showDeleteModal(employeeId:number){
+  showDeleteModal(employeeId: number) {
     this.modal.openDeleteModal(employeeId);
   }
 

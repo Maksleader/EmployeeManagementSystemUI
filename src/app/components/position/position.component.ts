@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Position } from 'src/app/models/position';
-import { AuthenticationService } from 'src/app/services/authentication.services';
-import { PositionService } from 'src/app/services/position.service';
-import { PositionmodalComponent } from './positionmodal/positionmodal.component';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Position } from "src/app/models/position";
+import { AuthenticationService } from "src/app/services/authentication.services";
+import { PositionService } from "src/app/services/position.service";
+import { PositionmodalComponent } from "./positionmodal/positionmodal.component";
 
 @Component({
-  selector: 'app-position',
-  templateUrl: './position.component.html',
-  styleUrls: ['./position.component.scss']
+  selector: "app-position",
+  templateUrl: "./position.component.html",
+  styleUrls: ["./position.component.scss"]
 })
 export class PositionComponent implements OnInit {
   positions: Position[];
-  constructor(private positionService: PositionService,public authService:AuthenticationService) { }
+  constructor(private positionService: PositionService, public authService: AuthenticationService) { }
 
   @ViewChild(PositionmodalComponent) modal: PositionmodalComponent
 
@@ -20,15 +20,12 @@ export class PositionComponent implements OnInit {
   }
 
   refreshPositions() {
-    this.positionService.getAllPostions().subscribe({
+    this.positionService.getAllPositions().subscribe({
       next: (result) => {
-        console.log(result);
         this.positions = result;
-      },
-      error: (error) => {
-        console.log(error);
       }
     });
+
   }
 
   showAddpositionModal() {
